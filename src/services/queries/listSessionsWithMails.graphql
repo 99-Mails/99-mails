@@ -1,0 +1,14 @@
+query ListSessionsWIthMails {
+  sessions {
+    id
+    expiresAt
+    mails {
+      rawSize
+      fromAddr
+      toAddr
+      downloadUrl
+      text
+      headerSubject
+    }
+  }
+}

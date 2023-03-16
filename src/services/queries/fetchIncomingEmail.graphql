@@ -1,0 +1,12 @@
+query FetchIncomingEmail ($id: ID!) {
+  session(id: $id) {
+    mails {
+      rawSize
+      fromAddr
+      toAddr
+      downloadUrl
+      text
+      headerSubject
+    }
+  }
+}

@@ -1,0 +1,7 @@
+query GetAddressWithSession ($id: ID!) {
+  session(id: $id) {
+    addresses {
+      address
+    }
+  }
+}

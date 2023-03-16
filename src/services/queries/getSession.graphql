@@ -1,0 +1,15 @@
+query GetSession ($id: ID!) {
+  session(id: $id) {
+    addresses {
+      address
+    }
+    mails {
+      rawSize
+      fromAddr
+      toAddr
+      downloadUrl
+      text
+      headerSubject
+    }
+  }
+}

@@ -1,0 +1,5 @@
+mutation CreateEmptySession {
+  introduceSession(input: { withAddress: false }) {
+    id
+  }
+}

@@ -1,0 +1,408 @@
+# https://dropmail.me/ API GraphQL schema
+# HTTP endpoint is https://dropmail.me/api/graphql/${AUTH_TOKEN}
+
+#
+# Primitive types
+#
+"YYYY-MM-DDTHH:MM:SS.mmm+ZZ:ZZ"
+scalar Timestamp
+
+"https://.../..."
+scalar Url
+
+enum DecodeStatus {
+  OK,
+  ERROR_DECODING
+}
+
+enum TextSource {
+  TEXT,
+  HTML
+}
+
+enum Order {
+  ASC,                          # [1, 2, 3]
+  DESC                          # [3, 2, 1]
+}
+
+enum AccessInterface {
+  WEB,
+  TELEGRAM,
+  VIBER,
+  API,
+  APP
+}
+
+
+#
+# Root
+#
+
+schema {
+  query : QueryRoot
+  mutation : MutationRoot
+}
+
+
+type QueryRoot {
+  "Lookup session by ID. Null is returned when session doesn't exist"
+  session(id: ID!): Session
+  "All sessions active (created and not expired) for the current user"
+  sessions: [Session!]!
+  "All domains available for address registration"
+  domains: [Domain!]!
+  "Lookup any object by it's globally unique ID (basically, it's `.id` field)"
+  node(id: ID!): Node
+}
+
+
+type MutationRoot {
+  "Start a new session. Without an input a new session will be started and a new address created with random domain"
+  introduceSession(input: IntroduceSessionInput): Session
+
+  "Add one more address to existing session"
+  introduceAddress(input: IntroduceAddressInput!): Address
+
+  "Restore old inactive address using `restoreKey`"
+  restoreAddress(input: RestoreAddressInput!): Address
+
+  """
+  Remove `Address` from `Session`. This address stops receiving mail, but can be restored later (to same or other session).
+  It does not remove associated `Mail` objects. Only `Address` itself.
+  Returns `true` on success and `false` on failure"""
+  deleteAddress(input: DeleteAddressInput!): Boolean
+}
+
+
+#
+# Main objects
+#
+
+"Domain name that is available for mailbox registration"
+type Domain implements Node {
+  id: ID!
+
+  "Fully-qualified domain name"
+  name: String!
+
+  "Timestamp of when this domain was first introduced in dropmail.me (how old is this domain)"
+  introducedAt: Timestamp!
+
+  """
+  List of interfaces the domain is available through.
+  When domain is not available via some interface, it means `Address` can not be created or restored
+  via this interface.
+  """
+  availableVia: [AccessInterface]!
+}
+
+
+"""
+Session is an umbrella object that has a limited lifetime.
+It contains a list of email addresses and a single mailbox that is shared between all the addresses.
+When session expires, all the received emails are destroyed and all the addresses are deactivated;
+addresses can be later restored into another session, but emails are removed permanently.
+Session's `expiresAt` is bumped each time the session is accessed or it receives an email. So, it
+can stay alive forever - as long as it is periodically checked.
+"""
+type Session implements Node {
+  id: ID!
+
+  "All the email addresses active in this session. Most recently added first."
+  addresses: [Address]
+
+  "All the emails received by this session. Most recently received first"
+  mails: [Mail]
+
+  """
+  All mails received after the mail with specified `Mail.id` (not inclusive). Most recently received first.
+  When `mailId` is not specified - returns the same result as `mails`.
+  Useful for simple pagination: when you receive multiple mails in the same session, first you query
+  this field without `mailId` and after you received the 1st mail, use it's ID as an argument
+  and so on.
+  For more advanced pagination see `mailsConnection`.
+  """
+  mailsAfterId(mailId: ID): [Mail]
+
+  """
+  Relay-standard pagination for mails belonging to this session.
+  See https://relay.dev/graphql/connections.htm
+  Cursor is executed in the following order:
+  1. Take all the session's emails
+  2. Sort using `sort`: Order.DESC - newest first (default); Order.ASC - oldest first
+  3. Drop all the mails up to and including `after`
+  4. Drop all the mails following and including `before`
+  5. From result of (4) take only `first` number of elements from start
+  6. From result of (5) take only `last` number of elements from end
+  When only one defined:
+  [A, B, C, D, E, F]
+        [C, D, E, F] After(B)
+  [A, B, C, D]       Before(E)
+  [A, B, C]          First(3)
+           [D, E, F] Last(3)
+  When all defined:
+  [A, B, C, D, E, F]
+     [B, C, D, E, F] After(A)
+     [B, C, D, E]    Before(F)
+     [B, C, D]       First(3)
+        [C, D]       Last(2)
+  """
+  mailsConnection(after: String, first: Int, before: String, last: Int, sort: Order = DESC): SessionMailsConnection,
+
+  "URL where all raw `mails` can be downloaded as .zip archive"
+  downloadZipUrl: Url
+
+  "Time (always in the future), when this session going to self-destruct"
+  expiresAt: Timestamp!
+  # TODO: some policies? rates / number of allowed addresses / emails
+  # TODO: fields to do pagination / cursors / "new since X" on `mails` to do HTTP pooling
+}
+
+
+"Single email address attached to the session"
+type Address implements Node {
+  id: ID!
+
+  "Email address string <login>@<domain>"
+  address: String!
+
+  "<domain> part of .address. Note: it's not domain name string! It's `Domain` object!"
+  domain: Domain!
+
+  "Key that can be used to restore the access to this address after session terminated. See MutationRoot.restoreAddress"
+  restoreKey: String!
+
+  "List of all emails received by this address. It's recommended to use Session.mails instead"
+  mails: [Mail]
+}
+
+
+"Single email received by the session"
+type Mail implements Node {
+  id: ID!
+
+  "Raw email (same as `raw` field) can be downloaded from this URL"
+  downloadUrl: Url!
+
+  "timestamp of when this email was received"
+  receivedAt: Timestamp!
+
+  "Raw unmodified value of the receiving email address string (so, when extended address was used, this field will contain extended address)"
+  toAddrOrig: String!
+
+  "Just <login>@<domain> email address. When extended address was used, extensions are dropped from this field"
+  toAddr: String!
+
+  "Value of SMTP `RCPT TO` command"
+  fromAddr: String!
+
+  "Raw contents of the email exactly as it was received"
+  raw: String!
+
+  "Size of `raw` field"
+  rawSize: Int!
+
+  # Fields extracted from `raw`
+
+  "Reflects the extent to which this MIME mail was decoded (not all emails are valid MIME, so sometimes we are not able to decode them)"
+  decodeStatus: DecodeStatus!
+
+  "Cleaned text payload of the email. When MIME contains `text/plain` version, we put it here. When MIME has only HTML body, we extract text from HTML (see textSource). It's NULL when decodeStatus is ERROR_DECODING"
+  text: String
+
+  "Value of MIME `From` header (only when decodeStatus is OK)"
+  headerFrom: String
+
+  "Value of MIME `Subject` header (only when decodeStatus is OK)"
+  headerSubject: String
+
+  "How `text` field was populated (from MIME `text/plain` or `text/html`)"
+  textSource: TextSource
+
+  """`true` if email has text/html body version.
+  `false` when there is no HTML version
+  `null` when `decodeStatus` is ERROR_DECODING"""
+  hasHtml: Boolean
+
+  """
+  If MIME has HTML version, this field contains sanitized version of this HTML:
+  * `<script>` tags are cleaned
+  * `<style>` tags are cleaned
+  * `<link>` tags are removed
+  * `<iframe>` tags are removed
+  * `<meta>` tags are removed
+  * `style` attributes are removed
+  * `on*` attributes are removed
+  * `href=\"javascript:\"` are removed
+  * `<img src="">` is cleaned, based on (nullable) sanitizerConfig
+  When `sanitizerConfig` is not provided, default `HtmlSanitizerConfig` is applied
+  """
+  sanitizedHtml(sanitizerConfig: HtmlSanitizerConfig): String
+
+  """
+  Similar to `sanitizedHtml`, but returns an URL where that same sanitized HTML can be downloaded.
+  """
+  downloadSanitizedHtmlUrl(sanitizerConfig: HtmlSanitizerConfig): Url
+
+  "If MIME has HTML version, this field contains raw value of this HTML"
+  html: String
+
+  "List of mail's attachents, if any and only when decodeStatus is STRICT"
+  attachments: [Attachment]
+}
+
+
+"Single email attachment"
+type Attachment implements Node {
+  id: ID!
+
+  "Raw attachment body can be downloaded by this URL"
+  downloadUrl: Url!
+
+  "Name of the attached file"
+  name: String
+
+  "MIME-type of the attached file"
+  mime: String!
+
+  "Raw contents of the attachment (only when it's utf8 plaintext)"
+  raw: String!                   # base-64 encoded?
+
+  "Size of the raw payload"
+  rawSize: Int!
+}
+
+
+#
+# "Relay" helpers
+# See https://relay.dev
+#
+
+"""
+An object with a globally unique ID.
+
+https://relay.dev/graphql/objectidentification.htm
+"""
+interface Node {
+  "ID of the object"
+  id: ID!
+}
+
+
+"""
+Sesion.mailsConnection flexible pagination.
+
+https://relay.dev/graphql/connections.htm
+"""
+type PageInfo {
+  "Same query, but with `after=endCursor`, would return non-empty result"
+  hasNextPage: Boolean!,
+
+  "Same query, but with `before=startCursor`, would return non-empty result"
+  hasPreviousPage: Boolean!,
+
+  "Cursor to use for `before`"
+  startCursor: String,
+
+  "Cursor to use for `after`"
+  endCursor: String
+}
+
+
+"One to many connection from `Session` to `Mail`s in this session"
+type SessionMailsConnection {
+  edges: [SessionMailEdge],
+  pageInfo: PageInfo!,
+  totalCount: Int!
+}
+
+
+type SessionMailEdge {
+  node: Mail!,
+  cursor: String!
+}
+
+"""
+Configuration input object for Mail.sanitizedHtml attribute.
+"""
+input HtmlSanitizerConfig {
+  """
+  What to do with `<img src='data:...' />` attribute?
+  * \"strip\" - remove completely
+  * \"keep\" - keep unchanged
+  """
+  imgData: String = "strip",
+  """
+  What to do with `<img src='cid:...' />` RFC-2392 attribute?
+  * \"strip\" - remove completely
+  * \"keep\" - keep unchanged
+  * \"proxy\" - replace it with a special dropmail.me link that will serve the content of this CID
+                as long as the session is alive
+  """
+  imgCid: String = "strip",
+  """
+  What to do with `<img src='http://...' />` / `<img src='https://...' />` attribute?
+  * \"strip\" - remove completely
+  * \"keep\" - keep unchanged
+  * \"proxy\" - replace it with a special dropmail.me link that will anonymously proxy the content
+                of this link as long as the session is alive
+  XXX: `keep` and `proxy` may let sender track the fact that user opened the email
+  """
+  imgHttp: String = "strip"
+}
+
+
+#
+# Mutations
+#
+
+"""
+Input for `introduceSession` mutation to define specific options for the new session.
+Mainly - to configure email address attached to session at creation (if any).
+"""
+input IntroduceSessionInput {
+  "Should a new address being added to the session when started? Otherwise use `introduceAddress`"
+  withAddress: Boolean = true
+
+  "ID of the domain where to create a new address. Random domain will be used if not specified"
+  domainId: ID
+}
+
+
+"""
+Input for `introduceAddress` mutation to create and attach new address to already existing session.
+Allows to tell to which session it should attach the address and (optionally) what domain to use for address creation.
+"""
+input IntroduceAddressInput {
+  "Add address to this session"
+  sessionId: ID!
+
+  "Create address in this domain"
+  domainId: ID
+}
+
+
+"""
+Input for `restoreAddress` mutation.
+Let you to specify into which session to restore the address, email address itself and mandatory restoration key for this address.
+"""
+input RestoreAddressInput {
+  "ID of the session to where this address should be restored"
+  sessionId: ID!
+
+  "Address to restore in 'login@example.com' form. See Address.address"
+  mailAddress: String!
+
+  "See Address.restoreKey"
+  restoreKey: String!
+}
+
+
+"""
+Input for `deleteAddress` mutation.
+Only takes addressId - ID of the address to be removed
+"""
+input DeleteAddressInput {
+  "ID of the Address to delete"
+  addressId: ID!
+}

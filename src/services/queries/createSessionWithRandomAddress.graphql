@@ -1,0 +1,9 @@
+mutation CreateSessionWithRandomAddress {
+  introduceSession {
+    id
+    expiresAt
+    addresses {
+      address
+    }
+  }
+}

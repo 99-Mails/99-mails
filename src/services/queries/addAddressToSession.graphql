@@ -1,0 +1,6 @@
+mutation AddAddressToSession ($input: IntroduceAddressInput!) {
+  introduceAddress(input: $input) {
+    address
+    restoreKey
+  }
+}
