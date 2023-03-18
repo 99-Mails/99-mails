@@ -21,4 +21,4 @@ function useStore() {
   }
 }
 
-export default useStore;
+export { useStore };

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Address from "../components/Address";
+import Address from "../components/Address/Address";
 import InboxContainer from "../components/Inbox";
 import {
   Heading,
@@ -29,15 +29,15 @@ const HomePage = () => {
 
   return (
     <>
-      <Flex flexDirection={"column"} gap="4" mb="2">
+      <Flex flexDirection="column" gap="4" mb="2">
         <Image src="https://placehold.co/1200x200/orange/white" />
         <Center>
-          <Heading>Disposable email service</Heading>
+          <Heading data-testid="header">Disposable email service</Heading>
         </Center>
         <Address />
         {/* <SelectDomains onChange={(e) => setDomain(e.target.value)} /> */}
         <Stack spacing={4} direction="row" align="center" mb="4">
-          <Button onClick={() => resetSession()} size="sm">
+          <Button data-testid="reset-session-btn" onClick={() => resetSession()} size="sm">
             Reset Session
           </Button>
           <MenuDomainContainer

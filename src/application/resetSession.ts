@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useSession } from "../services/api";
-import useStore from "../services/storeService";
+import { useStore } from "../services/storeService";
 
 export function useResetSession() {
   const { createSessionWithRandomAddress } = useSession();

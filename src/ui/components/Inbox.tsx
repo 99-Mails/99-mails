@@ -17,7 +17,7 @@ import {
   AccordionPanel,
 } from "@chakra-ui/react";
 import { useEmail } from "../../services/api";
-import useStore from "../../services/storeService";
+import { useStore } from "../../services/storeService";
 
 const InboxHeadItem = ({ text, value }) => {
   return (

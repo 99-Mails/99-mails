@@ -3,7 +3,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { ApolloProvider } from "@apollo/client";
 import { ChakraProvider } from "@chakra-ui/react";
-import StoreProvider from "./services/store";
+import { StoreProvider } from "./services/store";
 import { theme } from "./ui/theme";
 import { client } from "./services/client";
 

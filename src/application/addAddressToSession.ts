@@ -1,6 +1,6 @@
 import { Domain } from "../domains/Domain";
 import { useSession } from "../services/api";
-import useStore from "../services/storeService";
+import { useStore } from "../services/storeService";
 
 function useAddAddressToSession() {
   const { addAddressToSession } = useSession();
