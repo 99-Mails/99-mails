@@ -1,19 +1,21 @@
+import React from "react";
 import { vi, it, expect } from "vitest";
-import { 
-  screen, 
-  renderWithContext, 
-  waitForElementToBeRemoved 
+import {
+  screen,
+  renderWithContext,
+  waitForElementToBeRemoved,
 } from "../../../tests/test-utils";
 import Address from "./Address";
-import GetAddressWithSessionResponse from '../../../mocks/responses/GetAddressWithSession.json'
+import GetAddressWithSessionResponse from "../../../mocks/responses/GetAddressWithSession.json";
+import type { IStoreContext } from "../../../services/store";
 
-let storeProps;
+let storeProps: IStoreContext;
 
 beforeEach(() => {
   storeProps = {
     sessionId: "12345678",
     cleanState: vi.fn(),
-    setSession: vi.fn(),
+    setSessionId: vi.fn(),
   };
 });
 
@@ -32,9 +34,9 @@ it("should display the emails", async () => {
 
   const addresses = GetAddressWithSessionResponse.session.addresses;
 
-  await waitForElementToBeRemoved(screen.queryByText('Loading...'))
+  await waitForElementToBeRemoved(screen.queryByText("Loading..."));
 
-  addresses.forEach(address => {
-    expect(screen.getByText(address.address)).toBeDefined()
-  })
+  addresses.forEach((address) => {
+    expect(screen.getByText(address.address)).toBeDefined();
+  });
 });

@@ -1,18 +1,22 @@
+import type { Timestamp, AccessInterface } from "./Shared";
+
 export type Domain = {
   /**
-   * Domain id: string
+   * ID
    */
-  id: string
+  id: string;
   /**
-   * Domain name: string
+   * Fully-qualified domain name
    */
-  name: string
+  name: string;
   /**
-   * Domain introdicedAt: unknown
+   * Timestamp of when this domain was first introduced in dropmail.me (how old is this domain)
    */
-  introducedAt: unknown
+  introducedAt: Timestamp;
   /**
-   * Domain availableVia: unknown
+   * List of interfaces the domain is available through.
+   * When domain is not available via some interface, it means `Address` can not be created or restored
+   * via this interface.
    */
-  availableVia: unknown
+  availableVia: AccessInterface;
 };

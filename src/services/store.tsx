@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { createContext, useReducer, useEffect } from "react";
 
 const storagePrefix = "disposable_mail_";
@@ -10,11 +11,11 @@ const storageKey = storagePrefix + "root";
 // type StoreState = {};
 
 export interface IStoreContext {
-  sessionId: string,
-  setSessionId: (id: string) => void
+  sessionId: string;
+  setSessionId: (id: string) => void;
   // address: string[],
   // addAddress: (address: string) => void,
-  cleanState: () => void
+  cleanState: () => void;
 }
 
 // enum ActionType {
@@ -84,7 +85,8 @@ const StoreProvider = ({ children }) => {
     // address: state.address,
     sessionId: state.sessionID,
     cleanState: () => dispatch({ type: "CLEAN_STATE" }),
-    setSessionId: (id: string) => dispatch({ type: "SET_SESSION_ID", payload: { id } }),
+    setSessionId: (id: string) =>
+      dispatch({ type: "SET_SESSION_ID", payload: { id } }),
     // addAddress: (address: string) => dispatch({ type: "ADD_ADDRESS", payload: { address } }),
   };
 

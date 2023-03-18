@@ -1,16 +1,18 @@
+import React from "react";
 import { render } from "@testing-library/react";
 import { client } from "../services/client";
 import { ApolloProvider } from "@apollo/client";
-import { StoreContext } from "../services/store";
+import { IStoreContext, StoreContext } from "../services/store";
 
-const renderWithContext = (ui: React.ReactElement, { storeProps, ...restOptions }) =>
+const renderWithContext = (
+  ui: React.ReactElement,
+  { storeProps, ...restOptions }: { storeProps: IStoreContext }
+) =>
   render(ui, {
     wrapper: ({ children }) => {
       return (
         <StoreContext.Provider value={storeProps}>
-          <ApolloProvider client={client}>
-            {children}
-          </ApolloProvider>
+          <ApolloProvider client={client}>{children}</ApolloProvider>
         </StoreContext.Provider>
       );
     },

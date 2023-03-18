@@ -9,9 +9,12 @@ import {
   IconButton,
 } from "@chakra-ui/react";
 import { CopyIcon } from "@chakra-ui/icons";
+// import useDeleteAddressFromSession from "../../../application/deleteAddressFromSession";
 
 const AddressRow = ({ email, count }: { email: string; count: number }) => {
   const { onCopy, setValue, hasCopied } = useClipboard("");
+
+  // const { doDeleteAddress } = useDeleteAddressFromSession();
 
   useEffect(() => {
     setValue(email);
@@ -32,6 +35,12 @@ const AddressRow = ({ email, count }: { email: string; count: number }) => {
               size={"xs"}
               icon={<CopyIcon />}
             />
+            {/* <IconButton
+              onClick={() => doDeleteAddress}
+              aria-label="Copy to clipboard"
+              size={"xs"}
+              icon={<DeleteIcon />}
+            /> */}
             <Tag data-testid="email-count" bg="gray.500" color="white">
               {count}
             </Tag>

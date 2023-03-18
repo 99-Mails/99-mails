@@ -1,3 +1,5 @@
+import React from "react";
+// @ts-ignore
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import HomePage from "./ui/pages/HomePage";
 import MainLayout from "./ui/templates/MainLayout";
@@ -6,7 +8,6 @@ import NoMatch from "./ui/pages/NoMatchPage";
 function App() {
   return (
     <Router basename="/">
-
       <Switch>
         <Route path="/" exact>
           <MainLayout>
@@ -17,7 +18,6 @@ function App() {
           </MainLayout>
         </Route>
       </Switch>
-
     </Router>
   );
 }

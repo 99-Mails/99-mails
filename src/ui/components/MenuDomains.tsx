@@ -11,16 +11,15 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { INITIAL_DOMAIN } from "../../constants/domain";
-import { Domain } from "../../domains/Domain";
-import { useDomain } from "../../services/api";
+import type { Domain } from "../../domains/Domain";
+import { useListDomains } from "../../services/api";
 
 interface MenuDomainProps extends MenuButtonProps {
   setValue: (domain: Domain) => void;
 }
 
 const MenuDomains = forwardRef<MenuDomainProps, "button">((props, ref) => {
-  const { listDomains } = useDomain();
-  const { data, loading: loadingDomains } = listDomains();
+  const { data, loading: loadingDomains } = useListDomains();
 
   const { setValue, ...rest } = props;
 
@@ -44,7 +43,7 @@ const MenuDomains = forwardRef<MenuDomainProps, "button">((props, ref) => {
         </MenuItem>
         <MenuDivider />
         {!loadingDomains &&
-          data.domains.map((domain) => (
+          data.domains.map((domain: Domain) => (
             <MenuItem
               key={domain.id}
               value={domain.id}
@@ -58,7 +57,15 @@ const MenuDomains = forwardRef<MenuDomainProps, "button">((props, ref) => {
   );
 });
 
-const MenuDomainContainer = ({ domain, setDomain, onClick }) => {
+const MenuDomainContainer = ({
+  domain,
+  setDomain,
+  onClick,
+}: {
+  domain: Domain;
+  setDomain: () => void;
+  onClick: () => void;
+}) => {
   return (
     <ButtonGroup isAttached variant="outline">
       <Button
