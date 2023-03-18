@@ -16,6 +16,7 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": ["src", "src/graphql.d.ts"],
+  "include": ["src"],
+  "types": ["vitest/globals"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

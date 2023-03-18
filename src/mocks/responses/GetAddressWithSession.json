@@ -1,0 +1,15 @@
+{
+  "session": {
+    "__typename": "Session",
+    "addresses": [
+      {
+        "__typename": "Address",
+        "address": "aeebzbofrebosr@dropmail.me"
+      },
+      {
+        "__typename": "Address",
+        "address": "esmupuxvc@zeroe.ml"
+      }
+    ]
+  }
+}
