@@ -1,0 +1,41 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`should render correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="chakra-card css-cw4lkh"
+  >
+    <div
+      class="chakra-card__header css-0"
+    >
+      <h2
+        class="chakra-heading css-0"
+      >
+        Your temporary email(s)
+      </h2>
+    </div>
+    <div
+      class="chakra-card__body css-0"
+    >
+      <div
+        class="chakra-stack css-j7qwjs"
+      >
+        <div
+          class="css-gmuwbf"
+        >
+          <div
+            class="chakra-spinner css-1y7joxr"
+            data-testid="loading-spinner"
+          >
+            <span
+              class="css-8b45rq"
+            >
+              Loading...
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
