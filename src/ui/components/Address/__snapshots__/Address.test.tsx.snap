@@ -19,6 +19,7 @@ exports[`should render correctly 1`] = `
     >
       <div
         class="chakra-stack css-j7qwjs"
+        data-testid="address-list"
       >
         <div
           class="css-gmuwbf"
