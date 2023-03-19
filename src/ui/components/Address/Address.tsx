@@ -9,14 +9,14 @@ import {
   CardHeader,
   StackDivider,
 } from "@chakra-ui/react";
-import { useStore } from "../../../services/storeService";
+import { useTempEmail } from "../../../services/store";
 import { useGetAddressWithSession } from "../../../services/api";
 import type { Address } from "../../../domains/Address";
 import AddressRow from "./AddressRow";
 import ErrorBoundary, { ErrorFallback } from "../ErrorBoundary";
 
 const Address = () => {
-  const { sessionID } = useStore();
+  const { sessionID } = useTempEmail();
   const {
     data: addressList,
     loading,

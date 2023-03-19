@@ -1,20 +1,40 @@
-import React from "react";
 import { vi, it, expect } from "vitest";
-import { render, screen, userEvent } from "../../../tests/test-utils";
+import {
+  renderWithContext,
+  screen,
+  userEvent,
+} from "../../../tests/test-utils";
+import type { IStoreContext } from "../../../services/store/store";
 import AddressRow from "./AddressRow";
 
+let storeProps: IStoreContext;
+
+beforeEach(() => {
+  storeProps = {
+    dispatch: vi.fn,
+    state: {
+      tempEmails: {
+        sessionId: "123123",
+      },
+    },
+  };
+});
+
 it("should render correctly", () => {
-  const { asFragment } = render(<AddressRow email="asd@fs.te" count={2} />);
+  const { asFragment } = renderWithContext(
+    <AddressRow email="asd@fs.te" count={2} />,
+    { storeProps }
+  );
   expect(asFragment()).toMatchSnapshot();
 });
 
 it("should display the email address and it's count", () => {
-  render(<AddressRow email="asd@fs.te" count={2} />);
+  renderWithContext(<AddressRow email="asd@fs.te" count={2} />, { storeProps });
   expect(screen.getByTestId("email-address")).toHaveTextContent("asd@fs.te");
 });
 
 it("should display the email count", () => {
-  render(<AddressRow email="asd@fs.te" count={2} />);
+  renderWithContext(<AddressRow email="asd@fs.te" count={2} />, { storeProps });
   expect(screen.getByTestId("email-count")).toHaveTextContent("2");
 });
 
@@ -24,9 +44,9 @@ it("should be able to copy the email address to the clipboard", async () => {
 
   const user = userEvent.setup();
 
-  render(<AddressRow email="asd@fs.te" count={2} />);
+  renderWithContext(<AddressRow email="asd@fs.te" count={2} />, { storeProps });
 
-  const copyButton = screen.getByRole("button");
+  const copyButton = screen.getByTestId("copy-address");
   await user.click(copyButton);
 
   expect(document.execCommand).toHaveBeenCalledOnce();

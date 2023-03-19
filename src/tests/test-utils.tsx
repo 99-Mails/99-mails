@@ -2,7 +2,7 @@ import React from "react";
 import { render } from "@testing-library/react";
 import { client } from "../services/client";
 import { ApolloProvider } from "@apollo/client";
-import { IStoreContext, StoreContext } from "../services/store";
+import { IStoreContext, StoreContext } from "../services/store/store";
 
 const renderWithContext = (
   ui: React.ReactElement,

@@ -7,15 +7,18 @@ import {
 } from "../../../tests/test-utils";
 import Address from "./Address";
 import GetAddressWithSessionResponse from "../../../mocks/responses/GetAddressWithSession.json";
-import type { IStoreContext } from "../../../services/store";
+import type { IStoreContext } from "../../../services/store/store";
 
 let storeProps: IStoreContext;
 
 beforeEach(() => {
   storeProps = {
-    sessionId: "12345678",
-    cleanState: vi.fn(),
-    setSessionId: vi.fn(),
+    dispatch: vi.fn,
+    state: {
+      tempEmails: {
+        sessionId: "123123",
+      },
+    },
   };
 });
 

@@ -7,7 +7,7 @@ import fetchIncomingEmails from "./queries/fetchIncomingEmail.graphql?raw";
 import createSessionWithRandomAddress from "./queries/createSessionWithRandomAddress.graphql?raw";
 import addAddressToSession from "./queries/addAddressToSession.graphql?raw";
 import getAddressWithSession from "./queries/getAddressWithSession.graphql?raw";
-// import deleteAddress from "./queries/deleteAddress.graphql?raw";
+import deleteAddress from "./queries/deleteAddress.graphql?raw";
 
 const GET_SESSION = gql(getSession);
 const LIST_DOMAINS = gql(listDomains);
@@ -17,7 +17,7 @@ const CREATE_SESSION_WITH_RANDOM_ADDRESS = gql(createSessionWithRandomAddress);
 const FETCH_INCOMING_EMAILS = gql(fetchIncomingEmails);
 const ADD_ADDRESS_TO_SESSION = gql(addAddressToSession);
 const GET_ADDRESS_WITH_SESSION = gql(getAddressWithSession);
-// const DELETE_ADDRESS = gql(deleteAddress);
+const DELETE_ADDRESS = gql(deleteAddress);
 
 const useCreateEmptySession = () => useQuery(CREATE_EMPTY_SESSION);
 
@@ -41,7 +41,7 @@ const useGetAddressWithSession = (id: string) =>
 
 const useListDomains = () => useQuery(LIST_DOMAINS);
 
-// const useDeleteAddress = () => useMutation(DELETE_ADDRESS);
+const useDeleteAddress = () => useMutation(DELETE_ADDRESS);
 
 const useFetchIncomingEmails = (id: string) =>
   useQuery(FETCH_INCOMING_EMAILS, { variables: { id }, pollInterval: 500 });
@@ -55,5 +55,5 @@ export {
   useGetAddressWithSession,
   useListDomains,
   useFetchIncomingEmails,
-  // useDeleteAddress
+  useDeleteAddress,
 };

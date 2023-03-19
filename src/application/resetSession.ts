@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useCreateSessionWithRandomAddress } from "../services/api";
-import { useStore } from "../services/storeService";
+import { useTempEmail } from "../services/tempEmailService";
 
 export function useResetSession() {
   const [
@@ -8,7 +8,7 @@ export function useResetSession() {
     { data: SessionWithRandomAddress, loading: loadingRandomAddress },
   ] = useCreateSessionWithRandomAddress();
 
-  const { setSession, cleanState } = useStore();
+  const { setSession, cleanState } = useTempEmail();
 
   // FIXIT
   useEffect(() => {

@@ -17,7 +17,7 @@ import {
   AccordionPanel,
 } from "@chakra-ui/react";
 import { useFetchIncomingEmails } from "../../services/api";
-import { useStore } from "../../services/storeService";
+import { useTempEmail } from "../../services/tempEmailService";
 import type { Mail } from "../../domains/Mail";
 import ErrorBoundary, { ErrorFallback } from "./ErrorBoundary";
 
@@ -79,7 +79,7 @@ const InboxItem = ({ mail, ...props }: { mail: Mail }) => {
 };
 
 const InboxContainer = () => {
-  const { sessionID } = useStore();
+  const { sessionID } = useTempEmail();
   const { data, loading, error, refetch } = useFetchIncomingEmails(sessionID);
 
   return (

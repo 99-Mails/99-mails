@@ -1,9 +1,9 @@
 import type { Domain } from "../domains/Domain";
 import { useAddAddressToSession as API } from "../services/api";
-import { useStore } from "../services/storeService";
+import { useTempEmail } from "../services/tempEmailService";
 
 function useAddAddressToSession() {
-  const { sessionID: sessionId } = useStore();
+  const { sessionID: sessionId } = useTempEmail();
 
   const [introduceAddress, { data: addressWithRestoreKey, error }] =
     API(sessionId);
