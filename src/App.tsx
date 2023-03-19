@@ -1,5 +1,3 @@
-import React from "react";
-// @ts-ignore
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import HomePage from "./ui/pages/HomePage";
 import MainLayout from "./ui/templates/MainLayout";
