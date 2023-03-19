@@ -16,13 +16,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Unit Test ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'yarn'
-      - uses: actions/setup-node@v3
-      - name: Execute Unit tests
       - run: | 
           yarn ci
           yarn run test
