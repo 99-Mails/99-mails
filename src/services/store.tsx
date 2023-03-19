@@ -1,55 +1,29 @@
-/* eslint-disable */
 import { createContext, useReducer, useEffect } from "react";
 
 const storagePrefix = "disposable_mail_";
 const storageKey = storagePrefix + "root";
 
-// type IStoreProviderProps = {
-//   children: React.ReactNode[] | React.ReactNode;
-// };
+type IStoreProviderProps = {
+  children: React.ReactNode[] | React.ReactNode;
+};
 
-// type StoreState = {};
+type StoreState = typeof initialState;
 
 export interface IStoreContext {
   sessionId: string;
   setSessionId: (id: string) => void;
-  // address: string[],
-  // addAddress: (address: string) => void,
   cleanState: () => void;
 }
 
-// enum ActionType {
-//   DEFAULT = "DEFAULT",
-//   SET_ACCESS_TOKEN = "SET_ACCESS_TOKEN",
-//   CLEAR_ACCESS_TOKEN = "CLEAR_ACCESS_TOKEN",
-//   SET_EXPIRES_IN = "SET_EXPIRES_IN",
-//   CLEAR_EXPIRES_IN = "CLEAR_EXPIRES_IN",
-//   SET_PROVIDER_TOKEN = "SET_PROVIDER_TOKEN",
-//   CLEAR_PROVIDER_TOKEN = "CLEAR_PROVIDER_TOKEN",
-//   SET_REFRESH_TOKEN = "SET_REFRESH_TOKEN",
-//   CLEAR_REFRESH_TOKEN = "CLEAR_REFRESH_TOKEN",
-//   SET_TOKEN_TYPE = "SET_TOKEN_TYPE",
-//   CLEAR_TOKEN_TYPE = "CLEAR_TOKEN_TYPE",
-// }
-
-// type Action =
-//   | { type: "SET_ACCESS_TOKEN"; payload: { access_token: string } }
-//   | { type: "CLEAR_ACCESS_TOKEN" }
-//   | { type: "SET_EXPIRES_IN"; payload: { expires_in: number } }
-//   | { type: "CLEAR_EXPIRES_IN" }
-//   | { type: "SET_PROVIDER_TOKEN"; payload: { provider_token: string } }
-//   | { type: "CLEAR_PROVIDER_TOKEN" }
-//   | { type: "SET_REFRESH_TOKEN"; payload: { refresh_token: string } }
-//   | { type: "CLEAR_REFRESH_TOKEN" }
-//   | { type: "SET_TOKEN_TYPE"; payload: { token_type: string } }
-//   | { type: "CLEAR_TOKEN_TYPE" };
+type Action =
+  | { type: "SET_SESSION_ID"; payload: { id: string } }
+  | { type: "CLEAN_STATE" };
 
 const initialState = {
-  sessionID: null,
-  // address: [],
+  sessionID: "",
 };
 
-const reducer = (state, action) => {
+const reducer = (state: StoreState, action: Action) => {
   switch (action.type) {
     case "CLEAN_STATE":
       return initialState;
@@ -58,22 +32,19 @@ const reducer = (state, action) => {
         ...state,
         sessionID: action.payload.id,
       };
-    // case "ADD_ADDRESS":
-    //   return {
-    //     ...state,
-    //     address: [...state.address, action.payload.address]
-    //   }
     default:
       throw new Error("unhandled action type");
   }
 };
 
-export const StoreContext = createContext<IStoreContext | null>(null);
+// TODO: improve typing for createContext to prevent ?. in it's hook!
+export const StoreContext = createContext<Partial<IStoreContext>>({});
 
-const StoreProvider = ({ children }) => {
+const StoreProvider = ({ children }: IStoreProviderProps) => {
   const [state, dispatch] = useReducer(
     reducer,
     initialState,
+    // @ts-ignore
     (initial) => JSON.parse(localStorage.getItem(storageKey)) || initial
   );
 
@@ -82,12 +53,10 @@ const StoreProvider = ({ children }) => {
   }, [state]);
 
   const value = {
-    // address: state.address,
     sessionId: state.sessionID,
     cleanState: () => dispatch({ type: "CLEAN_STATE" }),
     setSessionId: (id: string) =>
       dispatch({ type: "SET_SESSION_ID", payload: { id } }),
-    // addAddress: (address: string) => dispatch({ type: "ADD_ADDRESS", payload: { address } }),
   };
 
   return (
