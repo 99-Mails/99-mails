@@ -28,3 +28,5 @@ export type Address = {
    */
   mails: [Mail];
 };
+
+export type AddressID = Pick<Address, "address" | "id">;
