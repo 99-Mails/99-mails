@@ -1,55 +1,81 @@
-import { useEffect } from "react";
+import type { Address } from "../../../domains/Address";
 import {
   Tag,
   Flex,
   Text,
   Center,
-  Heading,
-  useClipboard,
   IconButton,
+  useClipboard,
+  useDisclosure,
+  forwardRef,
+  IconButtonProps,
 } from "@chakra-ui/react";
-import { CopyIcon, DeleteIcon } from "@chakra-ui/icons";
+import { useEffect } from "react";
 import useDeleteAddressFromSession from "../../../application/deleteAddressFromSession";
+import { CopyIcon, DeleteIcon } from "@chakra-ui/icons";
+// import { useAlertDialog } from "../../../services/alertDialogAdaptor"
+// import { DialogContext } from "../../../contexts/alertDialog";
+import { useAlertDialog } from "../../../services/alertDialog/alertDialogAdaptor";
 
-const AddressRow = ({ email, count }: { email: string; count: number }) => {
-  const { onCopy, setValue, hasCopied } = useClipboard("");
+const AddressRowButton = forwardRef<IconButtonProps, "button">((props, ref) => {
+  return <IconButton ref={ref} {...props} />;
+});
 
+const AddressRowName = ({ name }: { name: string }) => {
+  return (
+    <Text data-testid="email-address" fontSize="3xl">
+      {name}
+    </Text>
+  );
+};
+
+const AddressRowCount = ({ count }: { count: number }) => {
+  return (
+    <Tag data-testid="email-count" bg="gray.500" color="white">
+      {count}
+    </Tag>
+  );
+};
+
+const AddressRow = ({
+  address,
+  count,
+}: {
+  address: Pick<Address, "address" | "id">;
+  count: number;
+}) => {
   const { doDeleteAddress } = useDeleteAddressFromSession();
+  const {
+    onCopy: onClipboard,
+    setValue,
+    hasCopied: isClipboard,
+  } = useClipboard("", { timeout: 0 });
+  // const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
-    setValue(email);
-  }, [email]);
+    setValue(address.address);
+  }, []);
+
+  // const { openDialog } = useAlertDialog()
+  // alert.setOpen(true);
 
   return (
-    <>
-      <Center>
-        <Heading size="xs">
-          <Flex gap={2} alignItems={"center"}>
-            <Text data-testid="email-address" fontSize="3xl">
-              {email}
-            </Text>
-            <IconButton
-              data-testid="copy-address"
-              onClick={onCopy}
-              colorScheme={hasCopied ? "green" : "gray"}
-              aria-label="Copy Address to clipboard"
-              size={"xs"}
-              icon={<CopyIcon />}
-            />
-            <IconButton
-              data-testid="delete-address"
-              onClick={() => doDeleteAddress}
-              aria-label="Delete Address"
-              size={"xs"}
-              icon={<DeleteIcon />}
-            />
-            <Tag data-testid="email-count" bg="gray.500" color="white">
-              {count}
-            </Tag>
-          </Flex>
-        </Heading>
-      </Center>
-    </>
+    <Flex gap={2} alignItems={"center"}>
+      <AddressRowName name={address.address} />
+      <AddressRowButton
+        data-testid="copy-address"
+        onClick={onClipboard}
+        icon={<CopyIcon />}
+        aria-label={""}
+      />
+      <AddressRowButton
+        data-testid="delete-address"
+        onClick={() => doDeleteAddress(address)}
+        icon={<DeleteIcon />}
+        aria-label={""}
+      />
+      <AddressRowCount count={count} />
+    </Flex>
   );
 };
 
