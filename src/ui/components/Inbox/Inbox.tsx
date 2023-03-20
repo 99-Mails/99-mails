@@ -16,10 +16,10 @@ import {
   AccordionItem,
   AccordionPanel,
 } from "@chakra-ui/react";
-import { useFetchIncomingEmails } from "../../services/api";
-import { useTempEmail } from "../../services/tempEmailService";
-import type { Mail } from "../../domains/Mail";
-import ErrorBoundary, { ErrorFallback } from "./ErrorBoundary";
+import { useFetchIncomingEmails } from "../../../services/api";
+import { useTempEmail } from "../../../services/tempEmailAdaptor";
+import type { Mail } from "../../../domains/Mail";
+import ErrorBoundary, { ErrorFallback } from "../ErrorBoundary";
 
 const InboxHeadItem = ({ text, value }: { text: string; value: string }) => {
   return (
@@ -126,5 +126,4 @@ const InboxContainer = () => {
   );
 };
 
-export { InboxItem };
-export default InboxContainer;
+export { InboxItem, InboxContainer };
