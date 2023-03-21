@@ -84,10 +84,15 @@ const DialogProvider = ({ children }) => {
             <AlertDialogBody>{body}</AlertDialogBody>
 
             <AlertDialogFooter>
-              <Button ref={cancelRef} onClick={() => onClick(false)}>
+              <Button
+                ref={cancelRef}
+                data-testid="alert-dialog-deny"
+                onClick={() => onClick(false)}
+              >
                 Cancel
               </Button>
               <Button
+                data-testid="alert-dialog-accept"
                 colorScheme="red"
                 onClick={() => onClick(true)}
                 ml={3}

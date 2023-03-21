@@ -42,7 +42,6 @@ function useDeleteAddressFromSession() {
         const isDeleted = response.data.deleteAddress;
 
         if (isDeleted) {
-          console.log("here in if");
           notifier.notifySuccess("Done.", "Address succesfully removed.");
           dialog.closeDialog();
         } else {
@@ -58,7 +57,6 @@ function useDeleteAddressFromSession() {
     } else {
       // Decline silently
       dialog.closeDialog();
-      console.log("declined.");
     }
   }
 

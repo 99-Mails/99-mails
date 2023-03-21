@@ -8,14 +8,12 @@ import {
   CardBody,
   CardHeader,
   StackDivider,
-  useClipboard,
 } from "@chakra-ui/react";
 import { useTempEmail } from "../../../services/store";
 import { useGetAddressWithSession } from "../../../services/api";
 import type { Address } from "../../../domains/Address";
 import AddressRow from "./AddressRow";
 import ErrorBoundary, { ErrorFallback } from "../ErrorBoundary";
-import useDeleteAddressFromSession from "../../../application/deleteAddressFromSession";
 
 const AddressHeader = () => {
   return (
