@@ -1,6 +1,6 @@
 import { useEffect, useState, default as React } from "react";
-import Address from "../components/Address/Address";
-import InboxContainer from "../components/Inbox";
+import { Address } from "../components/Address";
+import { InboxContainer } from "../components/Inbox/Inbox";
 import {
   Heading,
   Flex,

@@ -6,8 +6,14 @@ import {
 } from "../../../tests/test-utils";
 import type { IStoreContext } from "../../../services/store/store";
 import AddressRow from "./AddressRow";
+import type { Address } from "../../../domains/Address";
 
 let storeProps: IStoreContext;
+
+let address: Pick<Address, "address" | "id"> = {
+  address: "asd@fs.te",
+  id: "asdfasdfasdfsdfasdf",
+};
 
 beforeEach(() => {
   storeProps = {
@@ -22,19 +28,19 @@ beforeEach(() => {
 
 it("should render correctly", () => {
   const { asFragment } = renderWithContext(
-    <AddressRow email="asd@fs.te" count={2} />,
+    <AddressRow address={address} count={2} />,
     { storeProps }
   );
   expect(asFragment()).toMatchSnapshot();
 });
 
 it("should display the email address and it's count", () => {
-  renderWithContext(<AddressRow email="asd@fs.te" count={2} />, { storeProps });
+  renderWithContext(<AddressRow address={address} count={2} />, { storeProps });
   expect(screen.getByTestId("email-address")).toHaveTextContent("asd@fs.te");
 });
 
 it("should display the email count", () => {
-  renderWithContext(<AddressRow email="asd@fs.te" count={2} />, { storeProps });
+  renderWithContext(<AddressRow address={address} count={2} />, { storeProps });
   expect(screen.getByTestId("email-count")).toHaveTextContent("2");
 });
 
@@ -44,7 +50,7 @@ it("should be able to copy the email address to the clipboard", async () => {
 
   const user = userEvent.setup();
 
-  renderWithContext(<AddressRow email="asd@fs.te" count={2} />, { storeProps });
+  renderWithContext(<AddressRow address={address} count={2} />, { storeProps });
 
   const copyButton = screen.getByTestId("copy-address");
   await user.click(copyButton);
@@ -56,3 +62,16 @@ it("should be able to copy the email address to the clipboard", async () => {
     "asd@fs.te"
   );
 });
+
+// TODO: find a way to test it,
+//       maybe check if it's not availabe anymore in the dom
+// it("should be able to remove the email address from the session", async () => {
+//   const user = userEvent.setup();
+
+//   renderWithContext(<AddressRow address={address} count={2} />, { storeProps });
+
+//   const deleteButton = screen.getByTestId("delete-address");
+//   await user.click(deleteButton);
+
+//   expect(true).toBe(true);
+// });

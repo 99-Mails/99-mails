@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useCreateSessionWithRandomAddress } from "../services/api";
-import { useTempEmail } from "../services/tempEmailService";
+import { useTempEmail } from "../services/tempEmailAdaptor";
 
 export function useResetSession() {
   const [

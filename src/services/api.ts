@@ -1,4 +1,5 @@
 import { useQuery, useMutation, gql } from "@apollo/client";
+
 import getSession from "./queries/getSession.graphql?raw";
 import listDomains from "./queries/listDomains.graphql?raw";
 import listSessionsWithMails from "./queries/listSessionsWithMails.graphql?raw";
@@ -41,7 +42,12 @@ const useGetAddressWithSession = (id: string) =>
 
 const useListDomains = () => useQuery(LIST_DOMAINS);
 
-const useDeleteAddress = () => useMutation(DELETE_ADDRESS);
+const useDeleteAddress = (sessionId: string) =>
+  useMutation(DELETE_ADDRESS, {
+    refetchQueries: [
+      { query: GET_ADDRESS_WITH_SESSION, variables: { id: sessionId } },
+    ],
+  });
 
 const useFetchIncomingEmails = (id: string) =>
   useQuery(FETCH_INCOMING_EMAILS, { variables: { id }, pollInterval: 500 });
