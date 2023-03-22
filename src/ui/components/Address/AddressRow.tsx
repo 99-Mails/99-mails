@@ -1,4 +1,4 @@
-import type { Address } from "../../../domains/Address";
+import type { AddressID } from "../../../domains/Address";
 import {
   Tag,
   Flex,
@@ -7,6 +7,8 @@ import {
   useClipboard,
   forwardRef,
   IconButtonProps,
+  TextProps,
+  TagProps,
 } from "@chakra-ui/react";
 import { useEffect } from "react";
 import useDeleteAddressFromSession from "../../../application/deleteAddressFromSession";
@@ -16,23 +18,39 @@ const AddressRowButton = forwardRef<IconButtonProps, "button">((props, ref) => {
   return <IconButton ref={ref} {...props} />;
 });
 
-const AddressRowName = ({ name }: { name: string }) => {
-  return <Text fontSize="3xl">{name}</Text>;
+type AddressRowNameProps = TextProps & {
+  name: string;
 };
 
-const AddressRowCount = ({ count }: { count: number }) => {
+const AddressRowName = forwardRef<AddressRowNameProps, "p">((props, ref) => {
+  const { name } = props;
   return (
-    <Tag bg="gray.500" color="white">
-      {count}
-    </Tag>
+    <Text ref={ref} fontSize="3xl" {...props}>
+      {name}
+    </Text>
   );
+});
+
+type AddressRowCountProps = TagProps & {
+  count: number;
 };
+
+const AddressRowCount = forwardRef<AddressRowCountProps, "span">(
+  (props, ref) => {
+    const { count } = props;
+    return (
+      <Tag ref={ref} bg="gray.500" color="white" {...props}>
+        {count}
+      </Tag>
+    );
+  }
+);
 
 const AddressRow = ({
   address,
   count,
 }: {
-  address: Pick<Address, "address" | "id">;
+  address: AddressID;
   count: number;
 }) => {
   const { doDeleteAddress } = useDeleteAddressFromSession();

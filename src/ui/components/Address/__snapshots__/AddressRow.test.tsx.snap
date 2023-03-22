@@ -8,6 +8,7 @@ exports[`should render correctly 1`] = `
     <p
       class="chakra-text css-1tapsqs"
       data-testid="email-address"
+      name="asd@fs.te"
     >
       asd@fs.te
     </p>
@@ -52,6 +53,7 @@ exports[`should render correctly 1`] = `
     </button>
     <span
       class="css-x780zy"
+      count="2"
       data-testid="email-count"
     >
       2
