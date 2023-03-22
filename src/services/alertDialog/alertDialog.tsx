@@ -8,7 +8,7 @@ import {
   AlertDialogOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
-import { createContext, useCallback, useRef, useState } from "react";
+import { createContext, useRef, useState } from "react";
 
 interface IDialogContext {
   isOpen: boolean;
@@ -23,6 +23,8 @@ interface IDialogContext {
 export const DialogContext = createContext<IDialogContext>({ isOpen: false });
 
 // TODO: should move component to separate file
+// TODO: code smell
+// TODO: improve typing
 // TODO: should move component origin to a react-portal
 const DialogProvider = ({ children }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -70,6 +72,7 @@ const DialogProvider = ({ children }) => {
       {children}
 
       <AlertDialog
+        data-testid="alert-dialog-root"
         isCentered={true}
         isOpen={isOpen}
         leastDestructiveRef={cancelRef}
@@ -77,11 +80,17 @@ const DialogProvider = ({ children }) => {
       >
         <AlertDialogOverlay>
           <AlertDialogContent>
-            <AlertDialogHeader fontSize="lg" fontWeight="bold">
+            <AlertDialogHeader
+              data-testid="alert-dialog-header"
+              fontSize="lg"
+              fontWeight="bold"
+            >
               {header}
             </AlertDialogHeader>
 
-            <AlertDialogBody>{body}</AlertDialogBody>
+            <AlertDialogBody data-testid="alert-dialog-body">
+              {body}
+            </AlertDialogBody>
 
             <AlertDialogFooter>
               <Button

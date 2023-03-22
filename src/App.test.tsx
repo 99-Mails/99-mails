@@ -1,4 +1,3 @@
-import React from "react";
 import { vi, it, expect } from "vitest";
 import {
   renderWithContext,
@@ -22,6 +21,7 @@ beforeEach(() => {
   };
 });
 
+// TODO: fix this test
 it.skip("should get a random address when clicks on reset session button", async () => {
   const user = userEvent.setup();
 

@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { AlertDialogService } from "../../application/ports";
 import { DialogContext } from "./alertDialog";
 
