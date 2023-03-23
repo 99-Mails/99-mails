@@ -1,7 +1,6 @@
 import { it } from "vitest";
 import { StoreProvider, useTempEmail } from "./store";
 import { renderHook, act } from "@testing-library/react";
-import { expect } from "chai";
 
 it("should set the app state correctly", () => {
   const wrapper = ({ children }) => {

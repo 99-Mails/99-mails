@@ -1,4 +1,3 @@
-import React from "react";
 import { vi, it, expect } from "vitest";
 import {
   screen,

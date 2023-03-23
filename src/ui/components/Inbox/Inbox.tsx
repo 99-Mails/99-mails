@@ -1,129 +1,93 @@
-import { AddIcon, MinusIcon, DownloadIcon } from "@chakra-ui/icons";
 import {
   Tag,
   Flex,
   Card,
-  Link,
   Text,
   Center,
   Heading,
   Spinner,
-  CardBody,
   CardHeader,
-  CardFooter,
   Accordion,
-  AccordionButton,
-  AccordionItem,
-  AccordionPanel,
+  FlexProps,
+  forwardRef,
+  AccordionProps,
 } from "@chakra-ui/react";
 import { useFetchIncomingEmails } from "../../../services/api";
 import { useTempEmail } from "../../../services/tempEmailAdaptor";
 import type { Mail } from "../../../domains/Mail";
 import ErrorBoundary, { ErrorFallback } from "../ErrorBoundary";
+import { default as InboxItem } from "./InboxItem";
 
-const InboxHeadItem = ({ text, value }: { text: string; value: string }) => {
-  return (
-    <Flex gap="4">
-      <Text as="b">{text}</Text>
-      <Text>{value}</Text>
-    </Flex>
-  );
+type InboxBodyProps = AccordionProps & {
+  children: React.ReactElement[] | React.ReactElement;
 };
 
-const InboxItem = ({ mail, ...props }: { mail: Mail }) => {
-  const { headerSubject, text, fromAddr, downloadUrl, rawSize, toAddr } = mail;
+const InboxBody = forwardRef<InboxBodyProps, "div">((props, ref) => {
+  const { children, ...restProps } = props;
 
   return (
-    <AccordionItem {...props}>
-      {({ isExpanded }) => (
-        <Card boxShadow="none" border="1px" borderColor="gray.200">
-          <h2>
-            <AccordionButton>
-              {isExpanded ? (
-                <>
-                  <CardHeader flex="1" flexDirection="row" textAlign="left">
-                    <InboxHeadItem text="Subject:" value={headerSubject} />
-                    <InboxHeadItem text="Recipient:" value={toAddr} />
-                    <InboxHeadItem text="Sender:" value={fromAddr} />
-                    <InboxHeadItem text="Received at:" value={"now"} />
-                  </CardHeader>
-                  <MinusIcon fontSize="12px" />
-                </>
-              ) : (
-                <>
-                  <CardHeader as="span" flex="1" textAlign="left">
-                    <Text as="b">{headerSubject}</Text>
-                  </CardHeader>
-                  <AddIcon fontSize="12px" />
-                </>
-              )}
-            </AccordionButton>
-          </h2>
-          <AccordionPanel pb={4}>
-            <CardBody border="1px" borderColor="gray.300" p="3">
-              {text}
-            </CardBody>
-            <CardFooter>
-              <Link color="blue" href={downloadUrl.href} target="_blank">
-                <Flex gap="2" alignItems="center">
-                  <DownloadIcon />
-                  Download Email
-                </Flex>
-              </Link>
-            </CardFooter>
-          </AccordionPanel>
-        </Card>
-      )}
-    </AccordionItem>
+    <Accordion ref={ref} allowMultiple {...restProps}>
+      {children}
+    </Accordion>
   );
+});
+
+type InboxWrapperProps = FlexProps & {
+  children: React.ReactElement[] | React.ReactElement;
+  reset: () => void;
 };
+
+const InboxWrapper = forwardRef<InboxWrapperProps, "div">((props, ref) => {
+  const { children, reset, ...restProps } = props;
+
+  return (
+    <ErrorBoundary FallbackComponent={ErrorFallback} onReset={reset}>
+      <Flex ref={ref} flexDirection={"column"} gap="4" {...restProps}>
+        {children}
+      </Flex>
+    </ErrorBoundary>
+  );
+});
 
 const InboxContainer = () => {
   const { sessionID } = useTempEmail();
   const { data, loading, error, refetch } = useFetchIncomingEmails(sessionID);
 
   return (
-    <>
-      <ErrorBoundary
-        FallbackComponent={ErrorFallback}
-        onReset={() => refetch()}
-      >
-        <Flex flexDirection={"column"} gap="4">
-          <Heading size="xs">
-            <Flex gap={2} alignItems={"center"}>
-              <Text fontSize="3xl">Inbox</Text>
-              <Tag bg="gray.500" color="white">
-                {data?.session.mails.length}
-              </Tag>
-            </Flex>
-          </Heading>
-          {!data?.session.mails.length && (
-            <Card bg="gray.100">
-              <CardHeader>
-                <Heading size="md">No Emails Yet!</Heading>
-              </CardHeader>
-            </Card>
-          )}
-          <Accordion allowMultiple>
-            {error && (
-              <Center>
-                <Text>Error!</Text>
-              </Center>
-            )}
-            {loading && (
-              <Center>
-                <Spinner />
-              </Center>
-            )}
-            {data &&
-              data.session.mails.map((mail: Mail, index: number) => (
-                <InboxItem key={index} mail={mail} />
-              ))}
-          </Accordion>
+    <InboxWrapper data-testid="inbox-wrapper" reset={() => refetch()}>
+      <Heading size="xs">
+        <Flex gap={2} alignItems={"center"}>
+          <Text fontSize="3xl">Inbox</Text>
+          <Tag data-testid="inbox-emails-count" bg="gray.500" color="white">
+            {data?.session.mails.length}
+          </Tag>
         </Flex>
-      </ErrorBoundary>
-    </>
+      </Heading>
+      {!data?.session.mails.length && (
+        <Card bg="gray.100">
+          <CardHeader>
+            <Heading size="md">No Emails Yet!</Heading>
+          </CardHeader>
+        </Card>
+      )}
+      <InboxBody data-testid="inbox-body">
+        {error && (
+          <Center>
+            <Text>Error!</Text>
+          </Center>
+        )}
+        {loading && (
+          <Center>
+            <Spinner />
+          </Center>
+        )}
+        {data &&
+          data.session.mails.map((mail: Mail, index: number) => (
+            <InboxItem data-testid="inbox-item" key={index} mail={mail} />
+          ))}
+      </InboxBody>
+    </InboxWrapper>
   );
 };
 
-export { InboxItem, InboxContainer };
+export { InboxContainer, InboxBody };

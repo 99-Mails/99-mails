@@ -108,3 +108,8 @@ export type Mail = {
 // Similar to `sanitizedHtml`, but returns an URL where that same sanitized HTML can be downloaded.
 // """
 // downloadSanitizedHtmlUrl(sanitizerConfig: HtmlSanitizerConfig): Url
+
+export type MailSummary = Pick<
+  Mail,
+  "headerSubject" | "text" | "fromAddr" | "downloadUrl" | "toAddr"
+>;

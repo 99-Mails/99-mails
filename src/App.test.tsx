@@ -1,8 +1,8 @@
 import { vi, it, expect } from "vitest";
 import {
-  renderWithContext,
   screen,
   userEvent,
+  renderWithContext,
   waitForElementToBeRemoved,
 } from "./tests/test-utils";
 import App from "./App";

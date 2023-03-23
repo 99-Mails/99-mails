@@ -1,0 +1,59 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`should render correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="css-1kkt86i"
+    data-testid="inbox-wrapper"
+  >
+    <h2
+      class="chakra-heading css-0"
+    >
+      <div
+        class="css-r2hvuq"
+      >
+        <p
+          class="chakra-text css-1tapsqs"
+        >
+          Inbox
+        </p>
+        <span
+          class="css-x780zy"
+          data-testid="inbox-emails-count"
+        />
+      </div>
+    </h2>
+    <div
+      class="chakra-card css-1t31e1n"
+    >
+      <div
+        class="chakra-card__header css-0"
+      >
+        <h2
+          class="chakra-heading css-0"
+        >
+          No Emails Yet!
+        </h2>
+      </div>
+    </div>
+    <div
+      class="chakra-accordion css-0"
+      data-testid="inbox-body"
+    >
+      <div
+        class="css-gmuwbf"
+      >
+        <div
+          class="chakra-spinner css-1y7joxr"
+        >
+          <span
+            class="css-8b45rq"
+          >
+            Loading...
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

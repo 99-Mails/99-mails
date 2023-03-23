@@ -1,0 +1,90 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`should render correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="chakra-accordion css-0"
+  >
+    <div
+      class="chakra-accordion__item css-1fsnuue"
+    >
+      <div
+        class="chakra-card css-1p9ywwq"
+      >
+        <h2>
+          <button
+            aria-controls="accordion-panel-:r0:"
+            aria-expanded="false"
+            class="chakra-accordion__button css-ubg1nw"
+            data-index="0"
+            id="accordion-button-:r0:"
+            type="button"
+          >
+            <span
+              class="chakra-card__header css-1eziwv"
+            >
+              <b
+                class="chakra-text css-0"
+              >
+                My mail header
+              </b>
+            </span>
+            <svg
+              class="chakra-icon css-1hiix9"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M0,12a1.5,1.5,0,0,0,1.5,1.5h8.75a.25.25,0,0,1,.25.25V22.5a1.5,1.5,0,0,0,3,0V13.75a.25.25,0,0,1,.25-.25H22.5a1.5,1.5,0,0,0,0-3H13.75a.25.25,0,0,1-.25-.25V1.5a1.5,1.5,0,0,0-3,0v8.75a.25.25,0,0,1-.25.25H1.5A1.5,1.5,0,0,0,0,12Z"
+                fill="currentColor"
+              />
+            </svg>
+          </button>
+        </h2>
+        <div
+          class="chakra-collapse"
+          style="overflow: hidden; display: none; opacity: 0; height: 0px;"
+        >
+          <div
+            aria-labelledby="accordion-button-:r0:"
+            class="chakra-accordion__panel css-b0qdn7"
+            id="accordion-panel-:r0:"
+            role="region"
+          >
+            <div
+              class="chakra-card__body css-18zq9bd"
+            >
+              My mail body
+            </div>
+            <div
+              class="chakra-card__footer css-k008qs"
+            >
+              <a
+                class="chakra-link css-14ksm7b"
+                href="http://downloadurl.example.com/data.json"
+                target="_blank"
+              >
+                <div
+                  class="css-r2hvuq"
+                >
+                  <svg
+                    class="chakra-icon css-onkibi"
+                    focusable="false"
+                    viewBox="0 0 14 14"
+                  >
+                    <path
+                      d="M11.2857,6.05714 L10.08571,4.85714 L7.85714,7.14786 L7.85714,1 L6.14286,1 L6.14286,7.14786 L3.91429,4.85714 L2.71429,6.05714 L7,10.42857 L11.2857,6.05714 Z M1,11.2857 L1,13 L13,13 L13,11.2857 L1,11.2857 Z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                  Download Email
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

@@ -6,11 +6,11 @@ import {
 } from "../../../tests/test-utils";
 import type { IStoreContext } from "../../../services/store/store";
 import AddressRow from "./AddressRow";
-import type { Address } from "../../../domains/Address";
+import type { AddressID } from "../../../domains/Address";
 
 let storeProps: IStoreContext;
 
-let address: Pick<Address, "address" | "id"> = {
+let address: AddressID = {
   address: "asd@fs.te",
   id: "asdfasdfasdfsdfasdf",
 };
