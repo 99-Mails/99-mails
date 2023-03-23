@@ -9,7 +9,7 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
-    "test:e2e:local": "CYPRESS_BASE_URL='http://localhost:5173' cypress open",
+    "test:e2e:local": "CYPRESS_BASE_URL='http://localhost:5173' cypress run",
     "build-storybook": "storybook build",
     "prepare": "husky install"
   },

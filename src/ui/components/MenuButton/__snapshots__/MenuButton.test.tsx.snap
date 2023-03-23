@@ -1,0 +1,56 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`should render correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="chakra-button__group css-1ayoy1w"
+    data-attached=""
+    data-orientation="horizontal"
+    role="group"
+  >
+    <button
+      class="chakra-button css-1fysbuj"
+      data-testid="menu-button"
+      type="button"
+    >
+      + apple
+    </button>
+    <button
+      aria-controls="menu-list-:r1:"
+      aria-expanded="false"
+      aria-haspopup="menu"
+      class="chakra-menu__menu-button css-1eqi7qs"
+      data-testid="menu-wrapper"
+      id="menu-button-:r1:"
+    >
+      <span
+        class="css-xl71ch"
+      >
+        <svg
+          class="chakra-icon css-onkibi"
+          focusable="false"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"
+            fill="currentColor"
+          />
+        </svg>
+      </span>
+    </button>
+    <div
+      class="css-0"
+      style="visibility: hidden; position: absolute; min-width: max-content; inset: 0 auto auto 0;"
+    >
+      <div
+        aria-orientation="vertical"
+        class="chakra-menu__menu-list css-sjt5nk"
+        id="menu-list-:r1:"
+        role="menu"
+        style="transform-origin: var(--popper-transform-origin); opacity: 0; visibility: hidden; transform: scale(0.8) translateZ(0);"
+        tabindex="-1"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;

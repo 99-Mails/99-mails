@@ -1,10 +1,10 @@
-import type { Timestamp, AccessInterface } from "./Shared";
+import type { Timestamp, AccessInterface, ID } from "./Shared";
 
 export type Domain = {
   /**
    * ID
    */
-  id: string;
+  id: ID;
   /**
    * Fully-qualified domain name
    */
@@ -19,4 +19,9 @@ export type Domain = {
    * via this interface.
    */
   availableVia: AccessInterface;
+};
+
+export const filterByName = (domains: Domain[], name: string): Domain => {
+  const domainIndex = domains.findIndex((domain) => domain.name == name);
+  return domains[domainIndex];
 };
