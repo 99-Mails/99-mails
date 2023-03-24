@@ -23,7 +23,15 @@ const MenuWrapper = forwardRef<MenuWrapperProps, "button">((props, ref) => {
   const { cb, onChange, data, ...rest } = props;
 
   return (
-    <Menu isLazy flip={false}>
+    <Menu
+      isLazy
+      eventListeners={true}
+      flip={true}
+      preventOverflow={true}
+      boundary="clippingParents"
+      placement="auto-end"
+      strategy="absolute"
+    >
       <MenuButton ref={ref} {...rest}>
         <ChevronDownIcon />
       </MenuButton>
