@@ -3,10 +3,10 @@ import {
   screen,
   renderWithContext,
   waitForElementToBeRemoved,
-} from "../../../tests/test-utils";
+} from "@/tests/test-utils";
 import Address from "./Address";
-import GetAddressWithSessionResponse from "../../../mocks/responses/GetAddressWithSession.json";
-import type { IStoreContext } from "../../../services/store/store";
+import GetAddressWithSessionResponse from "@/mocks/responses/GetAddressWithSession.json";
+import type { IStoreContext } from "@/services/store/store";
 
 let storeProps: IStoreContext;
 

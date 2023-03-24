@@ -1,10 +1,10 @@
 import { vi, it } from "vitest";
-import { IStoreContext } from "../../../services/store";
+import { IStoreContext } from "@/services/store";
 import {
   renderWithContext,
   screen,
   waitForElementToBeRemoved,
-} from "../../../tests/test-utils";
+} from "@/tests/test-utils";
 import { InboxContainer } from "./Inbox";
 
 let storeProps: IStoreContext;

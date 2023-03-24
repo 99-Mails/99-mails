@@ -1,4 +1,4 @@
-import type { AddressID } from "../../../domains/Address";
+import type { AddressID } from "@/domains/Address";
 import {
   Tag,
   Flex,
@@ -11,7 +11,7 @@ import {
   TagProps,
 } from "@chakra-ui/react";
 import { useEffect } from "react";
-import useDeleteAddressFromSession from "../../../application/deleteAddressFromSession";
+import useDeleteAddressFromSession from "@/application/deleteAddressFromSession";
 import { CopyIcon, DeleteIcon } from "@chakra-ui/icons";
 
 const AddressRowButton = forwardRef<IconButtonProps, "button">((props, ref) => {

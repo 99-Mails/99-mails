@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { AlertDialogService } from "../../application/ports";
+import { AlertDialogService } from "@/application/ports";
 import { DialogContext } from "./alertDialog";
 
 // TODO: codesmells

@@ -12,9 +12,9 @@ import {
   forwardRef,
   AccordionProps,
 } from "@chakra-ui/react";
-import { useFetchIncomingEmails } from "../../../services/api";
-import { useTempEmail } from "../../../services/tempEmailAdaptor";
-import type { Mail } from "../../../domains/Mail";
+import { useFetchIncomingEmails } from "@/services/api";
+import { useTempEmail } from "@/services/tempEmailAdaptor";
+import type { Mail } from "@/domains/Mail";
 import ErrorBoundary, { ErrorFallback } from "../ErrorBoundary";
 import { default as InboxItem } from "./InboxItem";
 

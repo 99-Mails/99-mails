@@ -1,5 +1,5 @@
 import { it, expect } from "vitest";
-import { render } from "../../../tests/test-utils";
+import { render } from "@/tests/test-utils";
 import { InboxHeadItem } from "./InboxItem";
 
 it("should render correctly", () => {

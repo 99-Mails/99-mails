@@ -1,5 +1,5 @@
 import { vi, it, expect } from "vitest";
-import { render, screen, userEvent } from "../../../tests/test-utils";
+import { render, screen, userEvent } from "@/tests/test-utils";
 import { MenuButtonContainer } from "./MenuButton";
 
 it("should render correctly", () => {

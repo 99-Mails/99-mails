@@ -4,9 +4,9 @@ import {
   userEvent,
   renderWithContext,
   waitForElementToBeRemoved,
-} from "./tests/test-utils";
+} from "@/tests/test-utils";
 import App from "./App";
-import type { IStoreContext } from "./services/store/store";
+import type { IStoreContext } from "@/services/store/store";
 
 let storeProps: IStoreContext;
 

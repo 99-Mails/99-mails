@@ -1,9 +1,9 @@
-import type { AddressID } from "../domains/Address";
-import { useDeleteAddress } from "../services/api";
-import { useTempEmail } from "../services/tempEmailAdaptor";
-import { useNotifier } from "../services/notificationAdaptor";
+import type { AddressID } from "@/domains/Address";
+import { useDeleteAddress } from "@/services/api";
+import { useTempEmail } from "@/services/tempEmailAdaptor";
+import { useNotifier } from "@/services/notificationAdaptor";
 import { AlertDialogService, NotificationService } from "./ports";
-import { useAlertDialog } from "../services/alertDialog";
+import { useAlertDialog } from "@/services/alertDialog";
 
 function useDeleteAddressFromSession() {
   const notifier: NotificationService = useNotifier();

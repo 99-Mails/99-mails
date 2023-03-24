@@ -13,7 +13,7 @@ import {
   AccordionItemProps,
   forwardRef,
 } from "@chakra-ui/react";
-import type { MailSummary } from "../../../domains/Mail";
+import type { MailSummary } from "@/domains/Mail";
 
 const InboxHeadItem = ({ text, value }: { text: string; value: string }) => {
   return (

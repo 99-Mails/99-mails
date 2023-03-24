@@ -1,6 +1,6 @@
 import { useEffect, useState, default as React } from "react";
-import { Address } from "../components/Address";
-import { InboxContainer } from "../components/Inbox/Inbox";
+import { Address } from "@/ui/components/Address";
+import { InboxContainer } from "@/ui/components/Inbox/Inbox";
 import {
   Heading,
   Flex,
@@ -11,12 +11,12 @@ import {
   Button,
   Checkbox,
 } from "@chakra-ui/react";
-import { useResetSession } from "../../application/resetSession";
-import useAddAddressToSession from "../../application/addAddressToSession";
-import { filterByName } from "../../domains/Domain";
-import ErrorBoundary, { ErrorFallback } from "../components/ErrorBoundary";
-import { useListDomains } from "../../services/api";
-import { default as MenuDomainContainer } from "../components/MenuButton";
+import { useResetSession } from "@/application/resetSession";
+import useAddAddressToSession from "@/application/addAddressToSession";
+import { filterByName } from "@/domains/Domain";
+import ErrorBoundary, { ErrorFallback } from "@/ui/components/ErrorBoundary";
+import { useListDomains } from "@/services/api";
+import { default as MenuDomainContainer } from "@/ui/components/MenuButton";
 
 const HomePage = () => {
   const { resetSession } = useResetSession();

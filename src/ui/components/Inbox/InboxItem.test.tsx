@@ -1,6 +1,6 @@
 import { it, expect } from "vitest";
-import { MailSummary } from "../../../domains/Mail";
-import { render, screen } from "../../../tests/test-utils";
+import { MailSummary } from "@/domains/Mail";
+import { render, screen } from "@/tests/test-utils";
 import { default as InboxItem } from "./InboxItem";
 import { InboxBody } from "./Inbox";
 

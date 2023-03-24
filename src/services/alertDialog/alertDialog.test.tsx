@@ -1,5 +1,5 @@
 import { it } from "vitest";
-import { render } from "../../tests/test-utils";
+import { render } from "@/tests/test-utils";
 import { DialogProvider } from "./alertDialog";
 import { useAlertDialog } from "./alertDialogAdaptor";
 import { renderHook, act } from "@testing-library/react";
