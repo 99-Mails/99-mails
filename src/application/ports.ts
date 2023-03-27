@@ -18,6 +18,8 @@ export interface APIService {
 export interface AlertDialogService {
   openDialog: Fn;
   closeDialog: Fn;
+  cancelDialog: Fn;
   isLoading: Fn;
   stopLoading: Fn;
+  signal: AbortSignal;
 }

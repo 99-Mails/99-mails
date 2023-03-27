@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { AlertDialogService } from "@/application/ports";
-import { DialogContext } from "./alertDialog";
+import { DialogContext } from "./alertDialogContext";
 
 // TODO: codesmells
 // TODO: fix typing - should enable strict mode asap
@@ -8,22 +8,19 @@ import { DialogContext } from "./alertDialog";
 export function useAlertDialog(): AlertDialogService {
   const alert = useContext(DialogContext);
 
-  const openDialog = (arg) => alert.getConfirmation(arg);
-
-  const isLoading = () => alert.setButtonLoading(true);
-  const stopLoading = () => alert.setButtonLoading(false);
-
-  const closeDialog = () => {
+  function closeDialog() {
     alert.setHeader("");
     alert.setBody("");
     alert.setButtonLoading(false);
     alert.onClose();
-  };
+  }
 
   return {
-    openDialog,
     closeDialog,
-    isLoading,
-    stopLoading,
+    openDialog: (arg) => alert.getConfirmation(arg),
+    cancelDialog: () => alert.onCancel(),
+    isLoading: () => alert.setButtonLoading(true),
+    stopLoading: () => alert.setButtonLoading(false),
+    signal: alert.signal,
   };
 }

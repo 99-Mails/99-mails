@@ -4,7 +4,7 @@ import ReactDOM from "react-dom/client";
 import { ApolloProvider } from "@apollo/client";
 import { ChakraProvider } from "@chakra-ui/react";
 import { StoreProvider } from "./services/store/store";
-import { DialogProvider } from "./services/alertDialog/alertDialog";
+import { DialogProvider } from "./services/alertDialog/alertDialogContext";
 import { theme } from "./ui/theme";
 import { client } from "./services/client";
 

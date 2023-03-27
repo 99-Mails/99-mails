@@ -42,11 +42,18 @@ const useGetAddressWithSession = (id: string) =>
 
 const useListDomains = () => useQuery(LIST_DOMAINS);
 
-const useDeleteAddress = (sessionId: string) =>
+const useDeleteAddress = (sessionId: string, signal: AbortSignal) =>
   useMutation(DELETE_ADDRESS, {
     refetchQueries: [
       { query: GET_ADDRESS_WITH_SESSION, variables: { id: sessionId } },
     ],
+    context: {
+      fetchOptions: {
+        get signal() {
+          return signal;
+        },
+      },
+    },
   });
 
 const useFetchIncomingEmails = (id: string) =>

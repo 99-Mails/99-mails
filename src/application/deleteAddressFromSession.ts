@@ -7,10 +7,12 @@ import { useAlertDialog } from "@/services/alertDialog";
 
 function useDeleteAddressFromSession() {
   const notifier: NotificationService = useNotifier();
-  const dialog: AlertDialogService = useAlertDialog();
+  const { openDialog, signal, ...dialog }: AlertDialogService =
+    useAlertDialog();
   const { sessionID: sessionId } = useTempEmail();
+
   const [deleteAddress, { data: apiData, loading: apiLoading, error, called }] =
-    useDeleteAddress(sessionId);
+    useDeleteAddress(sessionId, signal);
 
   // TODO: fix console error
   // Uncaught (in promise) Error
@@ -26,7 +28,7 @@ function useDeleteAddressFromSession() {
   // TODO: code-smell
   // TODO: implement abort-controller with timeout for dialog
   async function doDeleteAddress(address: AddressID) {
-    const action = await dialog.openDialog({
+    const action = await openDialog({
       body: "Are you sure?",
       header: "Delete Address",
     });
@@ -42,8 +44,8 @@ function useDeleteAddressFromSession() {
         const isDeleted = response.data.deleteAddress;
 
         if (isDeleted) {
-          notifier.notifySuccess("Done.", "Address succesfully removed.");
           dialog.closeDialog();
+          notifier.notifySuccess("Done.", "Address succesfully removed.");
         } else {
           dialog.closeDialog();
           notifier.notifyError(
@@ -55,7 +57,6 @@ function useDeleteAddressFromSession() {
         throw new Error(e, {});
       }
     } else {
-      // Decline silently
       dialog.closeDialog();
     }
   }
