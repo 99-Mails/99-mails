@@ -57,7 +57,7 @@ const useDeleteAddress = (sessionId: string, signal: AbortSignal) =>
   });
 
 const useFetchIncomingEmails = (id: string) =>
-  useQuery(FETCH_INCOMING_EMAILS, { variables: { id }, pollInterval: 500 });
+  useQuery(FETCH_INCOMING_EMAILS, { variables: { id }, pollInterval: 10000 });
 
 export {
   useCreateEmptySession,

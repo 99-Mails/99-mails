@@ -5,7 +5,7 @@ import { useTempEmail } from "@/services/tempEmailAdaptor";
 function useAddAddressToSession() {
   const { sessionID: sessionId } = useTempEmail();
 
-  const [introduceAddress, { data: addressWithRestoreKey, error }] =
+  const [introduceAddress, { data: addressWithRestoreKey, loading, error }] =
     API(sessionId);
 
   async function doAddAddressToSession(domain?: Domain) {
@@ -20,6 +20,7 @@ function useAddAddressToSession() {
 
   return {
     doAddAddressToSession,
+    isAddingAddress: loading,
   };
 }
 

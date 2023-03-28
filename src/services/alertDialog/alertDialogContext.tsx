@@ -48,6 +48,7 @@ const DialogProvider = ({ children }) => {
     onOpen();
     const [promise, resolve] = await createPromise();
     setResolver({ resolve });
+    console.log(resolver);
     return promise;
   };
 
@@ -55,8 +56,15 @@ const DialogProvider = ({ children }) => {
     resolver.resolve(status);
   };
 
+  // TODO: fix re-fetch after an a request abortion
   const onCancel = () => {
     abortControllerRef.current.abort();
+    setButtonLoading(false);
+    setBody("");
+    setHeader("");
+    // resolver.resolve(false);
+    // setResolver({ resolve: null })
+    onClose();
   };
 
   // TODO: not working!

@@ -1,8 +1,10 @@
 /**
  * Temp Email State
  * @type: sessionId: String
+ * @type: expiresAt: BigInt
  * @method: cleanState: () => void
  * @method: setSessionId: (id: string) => void
+ * @method: setSessionExpiration: (expiresAt: bigint) => void
  * @author: Mahdi Khashan
  * @version: 0.0.1 Alpha
  */
@@ -10,6 +12,7 @@
 export enum TempEmail {
   clean = "CLEAN_STATE",
   SetSession = "SET_SESSION_ID",
+  SetSessionExpiration = "SET_SESSION_EXPIRATION",
 }
 
 export type TempEmailInitialState = typeof tempEmailInitialState;
@@ -19,6 +22,9 @@ export type TempEmailPayloads = {
   [TempEmail.SetSession]: {
     id: string;
   };
+  [TempEmail.SetSessionExpiration]: {
+    expiresAt: number;
+  };
 };
 
 export type TempEmailActions =
@@ -26,6 +32,7 @@ export type TempEmailActions =
 
 export const tempEmailInitialState = {
   sessionId: "",
+  expiresAt: 0,
 };
 
 const TempEmailReducer = (
@@ -39,6 +46,11 @@ const TempEmailReducer = (
       return {
         ...state,
         sessionId: action.payload.id,
+      };
+    case TempEmail.SetSessionExpiration:
+      return {
+        ...state,
+        expiresAt: action.payload.expiresAt,
       };
     default:
       throw new Error("unhandled action type");

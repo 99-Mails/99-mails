@@ -1,5 +1,7 @@
-query FetchIncomingEmail ($id: ID!) {
+query FetchIncomingEmail($id: ID!) {
   session(id: $id) {
+    id
+    expiresAt
     mails {
       rawSize
       fromAddr

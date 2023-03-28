@@ -11,6 +11,7 @@ it("should render correctly", () => {
       data={fruitList}
       initialValue="apple"
       onChange={selectedFruit}
+      isLoading={false}
     />
   );
   expect(asFragment()).toMatchSnapshot();
@@ -25,6 +26,7 @@ it("should show the initial value correctly", async () => {
       data={fruitList}
       initialValue="apple"
       onChange={selectedFruit}
+      isLoading={false}
     />
   );
 
@@ -59,6 +61,7 @@ it("should show the menu when it's clicked", async () => {
       data={fruitList}
       initialValue="apple"
       onChange={selectedFruit}
+      isLoading={false}
     />
   );
 
@@ -82,6 +85,7 @@ it("should change the value of button when an item in menu is clicked", async ()
       data={fruitList}
       initialValue="banana"
       onChange={selectedFruit}
+      isLoading={false}
     />
   );
 

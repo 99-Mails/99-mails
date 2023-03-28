@@ -1,5 +1,7 @@
+import { useEffect, useState } from "react";
 import {
   Text,
+  Flex,
   Stack,
   Center,
   Spinner,
@@ -8,12 +10,16 @@ import {
   CardBody,
   CardHeader,
   StackDivider,
+  forwardRef,
+  CardBodyProps,
 } from "@chakra-ui/react";
 import { useTempEmail } from "@/services/store";
 import { useGetAddressWithSession } from "@/services/api";
 import type { Address } from "@/domains/Address";
 import AddressRow from "./AddressRow";
 import ErrorBoundary, { ErrorFallback } from "../ErrorBoundary";
+import { ApolloError } from "@apollo/client";
+import { Timer } from "@/ui/components/Timer";
 
 const AddressHeader = () => {
   return (
@@ -23,19 +29,43 @@ const AddressHeader = () => {
   );
 };
 
-const AddressBody = ({
-  children,
-}: {
-  children: React.ReactElement[] | React.ReactElement;
-}) => {
+type AddressBodyProps = CardBodyProps & {
+  address: Address[];
+  error: ApolloError;
+  loading: boolean;
+};
+
+const AddressBody = forwardRef<AddressBodyProps, "div">((props, ref) => {
+  const { address, error, loading } = props;
+
   return (
-    <CardBody>
-      <Stack divider={<StackDivider />} spacing="4" data-testid="address-list">
-        {children}
+    <CardBody ref={ref}>
+      <Stack divider={<StackDivider />} spacing="2">
+        {!address && error && (
+          <Center>
+            <Text>Error!</Text>
+          </Center>
+        )}
+        {loading && (
+          <Center>
+            <Spinner data-testid="loading-spinner" />
+          </Center>
+        )}
+        {address.length == 0 && !loading && (
+          <Center>
+            <Text data-testid="no-address" as="b">
+              No Active Address!
+            </Text>
+          </Center>
+        )}
+        {address &&
+          address.map((address: Address, index: number) => (
+            <AddressRow key={address.id} address={address} count={2} />
+          ))}
       </Stack>
     </CardBody>
   );
-};
+});
 
 const AddressWrapper = ({
   children,
@@ -55,49 +85,29 @@ const AddressWrapper = ({
 
 const AddressContainer = () => {
   const { sessionID } = useTempEmail();
-  const {
-    data: addressList,
-    loading,
-    refetch,
-    error,
-  } = useGetAddressWithSession(sessionID);
+  const { data, loading, refetch, error } = useGetAddressWithSession(sessionID);
+  const [address, setAddress] = useState([]);
 
-  // if (error) {
-  //   throw new Error('Get Address With Session API failed!')
-  // }
+  useEffect(() => {
+    function handleAddressNotLoading() {
+      if (!loading && data) {
+        setAddress(data?.session?.addresses);
+      }
+    }
+    handleAddressNotLoading();
 
-  // const { onCopy, setValue, hasCopied } = useClipboard("", { timeout: 0 });
-  // const { doDeleteAddress } = useDeleteAddressFromSession();
-
-  // const copyAddressToClipboard = useCallback(async () => {
-  //   setCopyValue(address.address);
-  // }, [onCopy]);
-
-  // const onDoCopy = () => {
-  //   navigator.clipboard.writeText(address.id)
-  // }
+    return () => setAddress([]);
+  }, [loading, data]);
 
   return (
     <AddressWrapper reset={refetch}>
       <AddressHeader />
-      <AddressBody>
-        {error && (
-          <Center>
-            <Text>Error!</Text>
-          </Center>
-        )}
-        {loading && (
-          <Center>
-            <Spinner data-testid="loading-spinner" />
-          </Center>
-        )}
-        {addressList &&
-          addressList.session.addresses.map(
-            (address: Address, index: number) => (
-              <AddressRow key={address.id} address={address} count={2} />
-            )
-          )}
-      </AddressBody>
+      <AddressBody
+        data-testid="address-list"
+        address={address}
+        error={error}
+        loading={loading}
+      />
     </AddressWrapper>
   );
 };

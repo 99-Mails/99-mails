@@ -57,16 +57,23 @@ export interface MenuButtonContainerProps extends ButtonProps {
   initialValue: string;
   onChange: Fn;
   data: any[];
+  isLoading: boolean;
 }
 
 const MenuButtonContainer = forwardRef<MenuButtonContainerProps, "button">(
   (props, ref) => {
-    const { initialValue, data, onChange, ...restProps } = props;
+    const { initialValue, data, onChange, isLoading, ...restProps } = props;
     const [value, setValue] = useState(initialValue);
 
     return (
       <ButtonGroup isAttached variant="outline">
-        <Button data-testid="menu-button" ref={ref} {...restProps} size="sm">
+        <Button
+          data-testid="menu-button"
+          ref={ref}
+          isLoading={isLoading}
+          {...restProps}
+          size="sm"
+        >
           + {value}
         </Button>
         <MenuWrapper

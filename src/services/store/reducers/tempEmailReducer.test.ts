@@ -18,5 +18,16 @@ it("should set session correctly", () => {
   const action = { type: TempEmail.SetSession, payload: { id: "1234567890" } };
   // @ts-ignore
   const updatedState = TempEmailReducer(state, action);
-  expect(updatedState).toEqual({ sessionId: "1234567890" });
+  expect(updatedState).toEqual({ sessionId: "1234567890", expiresAt: 0 });
+});
+
+it("should set session expiration time correctly", () => {
+  const state = tempEmailInitialState;
+  const action = {
+    type: TempEmail.SetSessionExpiration,
+    payload: { expiresAt: "999999999" },
+  };
+  // @ts-ignore
+  const updatedState = TempEmailReducer(state, action);
+  expect(updatedState).toEqual({ expiresAt: "999999999", sessionId: "" });
 });

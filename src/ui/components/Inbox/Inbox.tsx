@@ -17,6 +17,7 @@ import { useTempEmail } from "@/services/tempEmailAdaptor";
 import type { Mail } from "@/domains/Mail";
 import ErrorBoundary, { ErrorFallback } from "../ErrorBoundary";
 import { default as InboxItem } from "./InboxItem";
+import { useEffect } from "react";
 
 type InboxBodyProps = AccordionProps & {
   children: React.ReactElement[] | React.ReactElement;
@@ -52,6 +53,17 @@ const InboxWrapper = forwardRef<InboxWrapperProps, "div">((props, ref) => {
 const InboxContainer = () => {
   const { sessionID } = useTempEmail();
   const { data, loading, error, refetch } = useFetchIncomingEmails(sessionID);
+
+  // useEffect(() => {
+  //   function updateExpiresAt() {
+  //     if (!loading) {
+  //       setExpiresAt(new Date(data?.session?.expiresAt).getTime());
+  //     }
+  //   }
+  //   updateExpiresAt();
+
+  //   return (() => setExpiresAt(0))
+  // }, [data]);
 
   return (
     <InboxWrapper data-testid="inbox-wrapper" reset={() => refetch()}>

@@ -16,6 +16,7 @@ beforeEach(() => {
     state: {
       tempEmails: {
         sessionId: "123123",
+        expiresAt: 0,
       },
     },
   };

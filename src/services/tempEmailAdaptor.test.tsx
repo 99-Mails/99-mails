@@ -19,6 +19,13 @@ it("should set the app state correctly", () => {
   expect(typeof result.current.sessionID).toBe("string");
 
   act(() => {
+    result.current.setExpiresAt(999999999999);
+  });
+
+  expect(result.current.expiresAt).toBe(999999999999);
+  expect(typeof result.current.expiresAt).toBe("number");
+
+  act(() => {
     result.current.cleanState();
   });
 

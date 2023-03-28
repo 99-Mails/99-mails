@@ -3,6 +3,7 @@ import {
   screen,
   renderWithContext,
   waitForElementToBeRemoved,
+  waitFor,
 } from "@/tests/test-utils";
 import Address from "./Address";
 import GetAddressWithSessionResponse from "@/mocks/responses/GetAddressWithSession.json";
@@ -16,6 +17,7 @@ beforeEach(() => {
     state: {
       tempEmails: {
         sessionId: "123123",
+        expiresAt: 0,
       },
     },
   };
@@ -38,7 +40,19 @@ it("should display the emails", async () => {
 
   await waitForElementToBeRemoved(screen.queryByText("Loading..."));
 
-  addresses.forEach((address) => {
-    expect(screen.getByText(address.address)).toBeDefined();
+  await waitFor(() => {
+    addresses.forEach((address) => {
+      expect(screen.getByText(address.address)).toBeDefined();
+    });
+  });
+});
+
+it("should display a message when there is no address", async () => {
+  storeProps.state.tempEmails.sessionId = "123456";
+
+  renderWithContext(<Address />, { storeProps });
+
+  await waitFor(() => {
+    expect(screen.getByText("No Active Address!")).toBeInTheDocument();
   });
 });

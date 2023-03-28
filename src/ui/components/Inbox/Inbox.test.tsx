@@ -3,6 +3,7 @@ import { IStoreContext } from "@/services/store";
 import {
   renderWithContext,
   screen,
+  waitFor,
   waitForElementToBeRemoved,
 } from "@/tests/test-utils";
 import { InboxContainer } from "./Inbox";
@@ -15,6 +16,7 @@ beforeEach(() => {
     state: {
       tempEmails: {
         sessionId: "111111",
+        expiresAt: 0,
       },
     },
   };
@@ -56,13 +58,19 @@ it("should show one when there is an email", async () => {
   expect(screen.getByTestId("inbox-emails-count")).toHaveTextContent("1");
 });
 
-it("should show the correct subject", () => {
-  storeProps.state.tempEmails.sessionId = "123456";
+it(
+  "should show the correct subject",
+  async () => {
+    storeProps.state.tempEmails.sessionId = "123456";
 
-  renderWithContext(<InboxContainer />, { storeProps });
+    renderWithContext(<InboxContainer />, { storeProps });
 
-  expect(screen.getByTestId("inbox-item")).toBeDefined();
-  expect(screen.getByTestId("inbox-item")).toHaveTextContent(
-    "Hey, happy Norowz!"
-  );
-});
+    await waitFor(() => {
+      expect(screen.getByTestId("inbox-item")).toBeDefined();
+      expect(screen.getByTestId("inbox-item")).toHaveTextContent(
+        "Hey, happy Norowz!"
+      );
+    });
+  },
+  { timeout: 2000 }
+);
