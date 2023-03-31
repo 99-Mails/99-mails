@@ -33,9 +33,14 @@ const InboxItem = forwardRef<InboxItemProps, "div">((props, ref) => {
   const { headerSubject, toAddr, fromAddr, text, downloadUrl } = mail;
 
   return (
-    <AccordionItem ref={ref} {...restProps}>
+    <AccordionItem ref={ref} {...restProps} w="full">
       {({ isExpanded }) => (
-        <Card boxShadow="none" border="1px" borderColor="gray.200">
+        <Card
+          boxShadow="none"
+          border="1px"
+          borderColor="gray.200"
+          borderRadius="0"
+        >
           <h2>
             <AccordionButton>
               {isExpanded ? (

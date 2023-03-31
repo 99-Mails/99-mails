@@ -19,6 +19,7 @@
     "@chakra-ui/react": "^2.5.1",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
+    "@reduxjs/toolkit": "^1.9.3",
     "cypress": "^12.8.1",
     "dayjs": "^1.11.7",
     "framer-motion": "^10.3.1",
@@ -27,7 +28,10 @@
     "react-dom": "^18.2.0",
     "react-error-boundary": "^3.1.4",
     "react-helmet": "^6.1.0",
-    "react-router-dom": "5.3.4"
+    "react-icons": "^4.8.0",
+    "react-router-dom": "5.3.4",
+    "redux-saga": "^1.2.3",
+    "use-sound": "^4.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.21.3",

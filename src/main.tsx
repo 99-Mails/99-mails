@@ -5,6 +5,7 @@ import { ApolloProvider } from "@apollo/client";
 import { ChakraProvider } from "@chakra-ui/react";
 import { StoreProvider } from "./services/store/store";
 import { DialogProvider } from "./services/alertDialog/alertDialogContext";
+import { ColorModeScript } from "@chakra-ui/react";
 import { theme } from "./ui/theme";
 import { client } from "./services/client";
 
@@ -14,6 +15,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
       <StoreProvider>
         <ApolloProvider client={client}>
           <DialogProvider>
+            <ColorModeScript initialColorMode={theme.initialColorMode} />
             <App />
           </DialogProvider>
         </ApolloProvider>

@@ -9,14 +9,11 @@ import {
   IconButtonProps,
   TextProps,
   TagProps,
-  HStack,
-  Spinner,
+  Center,
+  useColorModeValue,
 } from "@chakra-ui/react";
-import { Suspense, useEffect, useMemo, useState } from "react";
-import useDeleteAddressFromSession from "@/application/deleteAddressFromSession";
-import { CopyIcon, DeleteIcon } from "@chakra-ui/icons";
-import { Timer } from "../Timer";
-import { FancyDate } from "@/lib/date";
+import { useEffect, useState } from "react";
+import { CopyIcon } from "@chakra-ui/icons";
 
 const AddressRowButton = forwardRef<IconButtonProps, "button">((props, ref) => {
   return <IconButton ref={ref} {...props} />;
@@ -50,21 +47,13 @@ const AddressRowCount = forwardRef<AddressRowCountProps, "span">(
   }
 );
 
-const AddressRow = ({
-  address,
-  count,
-}: {
-  address: AddressID;
-  count: number;
-}) => {
+const AddressRow = (address: AddressID) => {
   const [disabled, disableAddress] = useState(false);
-  const [expiresAt, setExpiresAt] = useState("");
-  const { doDeleteAddress } = useDeleteAddressFromSession();
   const {
     onCopy: onClipboard,
     setValue,
     hasCopied,
-  } = useClipboard("", { timeout: 1000 });
+  } = useClipboard("", { timeout: 500 });
 
   useEffect(() => {
     function init() {
@@ -79,42 +68,38 @@ const AddressRow = ({
     return () => clearTimeout(timer);
   }, []);
 
-  useMemo(() => {
-    setExpiresAt(new FancyDate().getDateWithMinutesFromNow(10));
-  }, []);
+  const AddressNameColor = useColorModeValue("black", "blue.900");
+  const CopyButtonBg = useColorModeValue("gray.100", "yellow.400");
 
   return (
-    <Flex gap={2} alignItems={"center"} justifyContent="space-between">
-      <AddressRowName
-        as={disabled ? "del" : "p"}
-        data-testid="email-address"
-        name={address.address}
-      />
-      <HStack>
+    <Flex gap="2" alignItems="center" justifyContent="center">
+      <Center
+        bg="blue.200"
+        alignItems="center"
+        borderRadius="full"
+        px="1"
+        py="0.5"
+      >
+        <AddressRowName
+          color={AddressNameColor}
+          px="4"
+          fontWeight="bold"
+          as={disabled ? "del" : "p"}
+          data-testid="email-address"
+          name={address.address}
+        />
         <AddressRowButton
           data-testid="copy-address"
           isDisabled={disabled}
           onClick={onClipboard}
-          size="sm"
+          borderRadius="full"
+          size="md"
           icon={<CopyIcon />}
           aria-label={""}
-          colorScheme={hasCopied ? "green" : "gray"}
+          colorScheme={hasCopied ? "blue" : "gray"}
+          bg={CopyButtonBg}
         />
-        <AddressRowButton
-          data-testid="delete-address"
-          isDisabled={disabled}
-          onClick={() => doDeleteAddress(address)}
-          size="sm"
-          icon={<DeleteIcon />}
-          aria-label={""}
-        />
-        <AddressRowCount data-testid="email-count" count={count} />
-        <Tag minW="60px">
-          <Suspense fallback={<Spinner />}>
-            <Timer expiresAt={expiresAt} isDisabled={disabled} />
-          </Suspense>
-        </Tag>
-      </HStack>
+      </Center>
     </Flex>
   );
 };

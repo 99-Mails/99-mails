@@ -1,47 +1,44 @@
-import { useEffect, useState } from "react";
+import { PropsWithChildren, useEffect, useState } from "react";
 import {
   Text,
-  Flex,
   Stack,
   Center,
   Spinner,
   Heading,
-  Card,
-  CardBody,
-  CardHeader,
-  StackDivider,
+  Box,
+  BoxProps,
   forwardRef,
-  CardBodyProps,
+  StackDivider,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { useTempEmail } from "@/services/store";
 import { useGetAddressWithSession } from "@/services/api";
-import type { Address } from "@/domains/Address";
+import type { Address, AddressID } from "@/domains/Address";
 import AddressRow from "./AddressRow";
 import ErrorBoundary, { ErrorFallback } from "../ErrorBoundary";
 import { ApolloError } from "@apollo/client";
-import { Timer } from "@/ui/components/Timer";
 
 const AddressHeader = () => {
   return (
-    <CardHeader>
-      <Heading size="md">Your temporary email(s)</Heading>
-    </CardHeader>
+    <Center>
+      <Heading size="md">Your temporary email address</Heading>
+    </Center>
   );
 };
 
-type AddressBodyProps = CardBodyProps & {
-  address: Address[];
+type AddressBodyProps = BoxProps & {
+  addresses: Address[];
   error: ApolloError;
   loading: boolean;
 };
 
 const AddressBody = forwardRef<AddressBodyProps, "div">((props, ref) => {
-  const { address, error, loading } = props;
+  const { addresses, error, loading, ...restProps } = props;
 
   return (
-    <CardBody ref={ref}>
+    <Box ref={ref} mt="12" {...restProps}>
       <Stack divider={<StackDivider />} spacing="2">
-        {!address && error && (
+        {!addresses && error && (
           <Center>
             <Text>Error!</Text>
           </Center>
@@ -51,52 +48,77 @@ const AddressBody = forwardRef<AddressBodyProps, "div">((props, ref) => {
             <Spinner data-testid="loading-spinner" />
           </Center>
         )}
-        {address.length == 0 && !loading && (
+        {addresses.length == 0 && !loading && (
           <Center>
             <Text data-testid="no-address" as="b">
               No Active Address!
             </Text>
           </Center>
         )}
-        {address &&
-          address.map((address: Address, index: number) => (
-            <AddressRow key={address.id} address={address} count={2} />
+        {addresses &&
+          addresses.map(({ address, id }: AddressID) => (
+            <AddressRow key={id} address={address} id={id} />
           ))}
       </Stack>
-    </CardBody>
+    </Box>
   );
 });
 
-const AddressWrapper = ({
-  children,
-  reset,
-}: {
-  children: React.ReactElement[] | React.ReactElement;
-  reset: () => void;
-}) => {
+type AddressWrapperProps = PropsWithChildren & {
+  reset: Fn;
+};
+
+const AddressWrapper = (props: AddressWrapperProps) => {
+  const { reset, children } = props;
+
+  const bg = useColorModeValue("gray.100", "blue.300");
+
   return (
-    <ErrorBoundary FallbackComponent={ErrorFallback} onReset={() => reset()}>
-      <Card bg="gray.200" border="1px" borderColor="gray.300" boxShadow="none">
+    <Box
+      p="8"
+      borderRadius="lg"
+      bg={bg}
+      sx={{
+        height: "200px",
+        width: "600px",
+        backgroundImage: `linear-gradient(90deg, blue.500 50%, transparent 50%), linear-gradient(90deg, blue.500 50%, transparent 50%), linear-gradient(0deg, blue.500 50%, transparent 50%), linear-gradient(0deg, blue.500 50%, transparent 50%)`,
+        backgroundRepeat: "repeat-x, repeat-x, repeat-y, repeat-y",
+        backgroundSize: "15px 3px, 15px 3px, 3px 15px, 3px 15px",
+        backgroundPosition: "left top, right bottom, left bottom, right top",
+        animation: "border-dance 1s infinite linear",
+        "@keyframes border-dance": {
+          "0%": {
+            backgroundPosition:
+              "left top, right bottom, left bottom, right top",
+          },
+          "100%": {
+            backgroundPosition:
+              "left 15px top, right 15px bottom , left bottom 15px , right top 15px",
+          },
+        },
+      }}
+    >
+      <ErrorBoundary FallbackComponent={ErrorFallback} onReset={() => reset()}>
         {children}
-      </Card>
-    </ErrorBoundary>
+      </ErrorBoundary>
+    </Box>
   );
 };
 
 const AddressContainer = () => {
   const { sessionID } = useTempEmail();
   const { data, loading, refetch, error } = useGetAddressWithSession(sessionID);
-  const [address, setAddress] = useState([]);
+  const [addresses, setAddresses] = useState([]);
 
   useEffect(() => {
     function handleAddressNotLoading() {
       if (!loading && data) {
-        setAddress(data?.session?.addresses);
+        setAddresses(data?.session?.addresses);
       }
     }
     handleAddressNotLoading();
 
-    return () => setAddress([]);
+    return () => setAddresses([]);
   }, [loading, data]);
 
   return (
@@ -104,7 +126,7 @@ const AddressContainer = () => {
       <AddressHeader />
       <AddressBody
         data-testid="address-list"
-        address={address}
+        addresses={addresses}
         error={error}
         loading={loading}
       />

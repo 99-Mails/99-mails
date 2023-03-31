@@ -10,10 +10,10 @@ exports[`should render correctly 1`] = `
       class="chakra-heading css-0"
     >
       <div
-        class="css-r2hvuq"
+        class="css-vffflp"
       >
         <p
-          class="chakra-text css-1tapsqs"
+          class="chakra-text css-9j8q24"
         >
           Inbox
         </p>
@@ -24,33 +24,58 @@ exports[`should render correctly 1`] = `
       </div>
     </h2>
     <div
-      class="chakra-card css-1t31e1n"
+      class="chakra-card css-f2v14d"
     >
       <div
         class="chakra-card__header css-0"
       >
-        <h2
-          class="chakra-heading css-0"
+        <div
+          class="css-1sfjx12"
         >
-          No Emails Yet!
-        </h2>
+          <h2
+            class="chakra-heading css-0"
+          >
+            No Emails Yet!
+          </h2>
+          <div
+            class="css-0"
+          >
+            <div
+              class="chakra-spinner css-1y7joxr"
+            >
+              <span
+                class="css-8b45rq"
+              >
+                Loading...
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-    <div
-      class="chakra-accordion css-0"
-      data-testid="inbox-body"
-    >
       <div
-        class="css-gmuwbf"
+        class="chakra-card__body css-1b4abyo"
       >
         <div
-          class="chakra-spinner css-1y7joxr"
+          class="css-3xr8nw"
         >
-          <span
-            class="css-8b45rq"
+          <div
+            class="css-dvxtzn"
           >
-            Loading...
-          </span>
+            <p
+              class="chakra-text css-n2bes8"
+            >
+              📨
+            </p>
+            <b
+              class="chakra-text css-hz05j"
+            >
+              Your inbox is empty.
+            </b>
+          </div>
+          <div
+            class="chakra-accordion css-8atqhb"
+            data-testid="inbox-body"
+          />
         </div>
       </div>
     </div>

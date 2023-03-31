@@ -33,7 +33,7 @@ const DialogProvider = ({ children }) => {
   const cancelRef = useRef();
 
   const createPromise = () => {
-    let resolver;
+    let resolver: Fn;
     return [
       new Promise((resolve) => {
         resolver = resolve;
@@ -42,13 +42,12 @@ const DialogProvider = ({ children }) => {
     ];
   };
 
-  const getConfirmation = async (arg) => {
+  const getConfirmation = (arg: any) => {
     setBody(arg.body);
     setHeader(arg.header);
     onOpen();
-    const [promise, resolve] = await createPromise();
+    const [promise, resolve] = createPromise();
     setResolver({ resolve });
-    console.log(resolver);
     return promise;
   };
 
@@ -62,8 +61,6 @@ const DialogProvider = ({ children }) => {
     setButtonLoading(false);
     setBody("");
     setHeader("");
-    // resolver.resolve(false);
-    // setResolver({ resolve: null })
     onClose();
   };
 
