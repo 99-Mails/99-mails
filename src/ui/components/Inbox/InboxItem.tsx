@@ -14,6 +14,7 @@ import {
   forwardRef,
 } from "@chakra-ui/react";
 import type { MailSummary } from "@/domains/Mail";
+import { FancyDate } from "@/lib/date";
 
 const InboxHeadItem = ({ text, value }: { text: string; value: string }) => {
   return (
@@ -49,7 +50,10 @@ const InboxItem = forwardRef<InboxItemProps, "div">((props, ref) => {
                     <InboxHeadItem text="Subject:" value={headerSubject} />
                     <InboxHeadItem text="Recipient:" value={toAddr} />
                     <InboxHeadItem text="Sender:" value={fromAddr} />
-                    <InboxHeadItem text="Received at:" value={"now"} />
+                    <InboxHeadItem
+                      text="Received at:"
+                      value={new FancyDate().toISOString()}
+                    />
                   </CardHeader>
                   <MinusIcon fontSize="12px" />
                 </>
