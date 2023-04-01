@@ -10,6 +10,13 @@ import { theme } from "@/ui/theme";
 import { client } from "@/services/client";
 import { Provider } from "react-redux";
 import { store } from "@/services/redux/redux";
+import * as Sentry from "@sentry/react";
+
+Sentry.init({
+  dsn: import.meta.env.VITE_SENTRY_TOKEN,
+  integrations: [new Sentry.BrowserTracing()],
+  tracesSampleRate: 1.0,
+});
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
