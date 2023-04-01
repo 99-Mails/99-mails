@@ -1,37 +1,30 @@
-import { FancyDate } from "@/lib/date";
 import { LockIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
 import {
   Flex,
   HStack,
   Button,
-  Tag,
   Spinner,
   Box,
+  Text,
   IconButton,
   useColorMode,
 } from "@chakra-ui/react";
-import { Suspense, useEffect, useMemo, useState } from "react";
+import { Suspense } from "react";
 import { Logo } from "../Logo";
 import { Timer } from "../Timer";
 import { FaBell, FaBellSlash } from "react-icons/fa";
 import { useSoundEffects } from "@/hooks/useSoundEffects";
+import { useSelector } from "react-redux";
+import { useGenerateSession } from "@/application/generateSession";
 
 const Navbar = () => {
-  const [disabled, disableAddress] = useState(false);
-  const [expiresAt, setExpiresAt] = useState("");
+  // @ts-ignore
+  const addressTimerState = useSelector((state) => state.addressTimer);
 
   const { isSoundEffect, toggleSoundEffect } = useSoundEffects();
-
-  useEffect(() => {
-    const timer = setTimeout(() => disableAddress(true), 10 * 60000);
-    return () => clearTimeout(timer);
-  }, []);
-
-  useMemo(() => {
-    setExpiresAt(new FancyDate().getDateWithMinutesFromNow(10));
-  }, []);
-
   const { colorMode, toggleColorMode } = useColorMode();
+
+  const { generateSession, loadingSession } = useGenerateSession();
 
   return (
     <Flex p="6" justifyContent="space-between" alignItems="center">
@@ -63,16 +56,31 @@ const Navbar = () => {
           bg="transparent"
           onClick={toggleColorMode}
         />
-        <Tag minW="75px" size="lg" justifyContent="center" colorScheme="blue">
-          <Suspense fallback={<Spinner />}>
-            <Timer expiresAt={expiresAt} isDisabled={disabled} />
-          </Suspense>
-        </Tag>
+        <Button
+          size="sm"
+          minW="75px"
+          justifyContent="center"
+          isLoading={loadingSession}
+          colorScheme={addressTimerState?.isDisabled ? "red" : "linkedin"}
+          onClick={() => generateSession()}
+        >
+          {addressTimerState?.isDisabled ? (
+            <Text>Reset Address</Text>
+          ) : (
+            <Suspense fallback={<Spinner />}>
+              <Timer
+                time={addressTimerState?.seconds}
+                isDisabled={addressTimerState?.isDisabled}
+              />
+            </Suspense>
+          )}
+        </Button>
         <Button
           size="sm"
           leftIcon={<Box>👑</Box>}
           colorScheme="yellow"
           variant="solid"
+          onClick={() => console.log("premium user should login")}
         >
           Premium
         </Button>

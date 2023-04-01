@@ -14,6 +14,8 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { CopyIcon } from "@chakra-ui/icons";
+import { useDispatch } from "react-redux";
+import { useSelector } from "@/services/redux";
 
 const AddressRowButton = forwardRef<IconButtonProps, "button">((props, ref) => {
   return <IconButton ref={ref} {...props} />;
@@ -48,7 +50,8 @@ const AddressRowCount = forwardRef<AddressRowCountProps, "span">(
 );
 
 const AddressRow = (address: AddressID) => {
-  const [disabled, disableAddress] = useState(false);
+  const addressTimerState = useSelector((state) => state.addressTimer);
+
   const {
     onCopy: onClipboard,
     setValue,
@@ -61,11 +64,6 @@ const AddressRow = (address: AddressID) => {
     }
     init();
     return () => setValue("");
-  }, []);
-
-  useEffect(() => {
-    const timer = setTimeout(() => disableAddress(true), 10 * 60000);
-    return () => clearTimeout(timer);
   }, []);
 
   const AddressNameColor = useColorModeValue("black", "blue.900");
@@ -84,13 +82,13 @@ const AddressRow = (address: AddressID) => {
           color={AddressNameColor}
           px="4"
           fontWeight="bold"
-          as={disabled ? "del" : "p"}
+          as={addressTimerState?.isDisabled ? "del" : "p"}
           data-testid="email-address"
           name={address.address}
         />
         <AddressRowButton
           data-testid="copy-address"
-          isDisabled={disabled}
+          isDisabled={addressTimerState?.isDisabled}
           onClick={onClipboard}
           borderRadius="full"
           size="md"

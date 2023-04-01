@@ -1,13 +1,17 @@
 import { useEffect } from "react";
 import { useCreateSessionWithRandomAddress } from "@/services/api";
 import { useTempEmail } from "@/services/tempEmailAdaptor";
+import { useDispatch } from "react-redux";
+import { AddressTimerActions } from "@/services/sagas/addressTimer";
 
 export function useGenerateSession() {
   const { setSession, cleanState, setExpiresAt } = useTempEmail();
   const [
     introduceSession,
-    { data: SessionWithRandomAddress, loading: loadingRandomAddress },
+    { data: SessionWithRandomAddress, loading: loadingSession },
   ] = useCreateSessionWithRandomAddress();
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const func = () => {
@@ -22,14 +26,21 @@ export function useGenerateSession() {
     };
     func();
     return () => setSession("");
-  }, [loadingRandomAddress]);
+  }, [loadingSession]);
 
   function generateSession() {
     cleanState();
-    introduceSession();
+    try {
+      introduceSession();
+    } catch (e) {
+      throw new Error(`Error generating session: ${e}`);
+    }
+    // introduceSession();
+    dispatch({ type: AddressTimerActions.actionTypes.RESET });
   }
 
   return {
     generateSession,
+    loadingSession,
   };
 }

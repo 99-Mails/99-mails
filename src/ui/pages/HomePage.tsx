@@ -43,11 +43,7 @@ const HomePage = () => {
               color={HeaderColor}
             >
               <Text as="b" fontWeight="extrabold">
-                User friendly,{" "}
-              </Text>
-              🔒{" "}
-              <Text as="b" color="blue.400">
-                Safe
+                User friendly, 🔒 Safe
               </Text>{" "}
               and ⏰ available temporary ✉️ email service.
             </Heading>

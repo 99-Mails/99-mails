@@ -20,29 +20,30 @@ const ADD_ADDRESS_TO_SESSION = gql(addAddressToSession);
 const GET_ADDRESS_WITH_SESSION = gql(getAddressWithSession);
 const DELETE_ADDRESS = gql(deleteAddress);
 
-const useCreateEmptySession = () => useQuery(CREATE_EMPTY_SESSION);
+export const useCreateEmptySession = () => useQuery(CREATE_EMPTY_SESSION);
 
-const useGetSession = (id: string) =>
+export const useGetSession = (id: string) =>
   useQuery(GET_SESSION, { variables: { id } });
 
-const useCreateSessionWithRandomAddress = () =>
+export const useCreateSessionWithRandomAddress = () =>
   useMutation(CREATE_SESSION_WITH_RANDOM_ADDRESS);
 
-const useListSessionsWithMails = () => useQuery(LIST_SESSIONS_WITH_MAILS);
+export const useListSessionsWithMails = () =>
+  useQuery(LIST_SESSIONS_WITH_MAILS);
 
-const useAddAddressToSession = (sessionId: string) =>
+export const useAddAddressToSession = (sessionId: string) =>
   useMutation(ADD_ADDRESS_TO_SESSION, {
     refetchQueries: [
       { query: GET_ADDRESS_WITH_SESSION, variables: { id: sessionId } },
     ],
   });
 
-const useGetAddressWithSession = (id: string) =>
-  useQuery(GET_ADDRESS_WITH_SESSION, { variables: { id } });
+export const useGetAddressWithSession = (id: string) =>
+  useQuery(GET_ADDRESS_WITH_SESSION, { variables: { id }, pollInterval: 1000 });
 
-const useListDomains = () => useQuery(LIST_DOMAINS);
+export const useListDomains = () => useQuery(LIST_DOMAINS);
 
-const useDeleteAddress = (sessionId: string, signal: AbortSignal) =>
+export const useDeleteAddress = (sessionId: string, signal: AbortSignal) =>
   useMutation(DELETE_ADDRESS, {
     refetchQueries: [
       { query: GET_ADDRESS_WITH_SESSION, variables: { id: sessionId } },
@@ -56,17 +57,5 @@ const useDeleteAddress = (sessionId: string, signal: AbortSignal) =>
     },
   });
 
-const useFetchIncomingEmails = (id: string) =>
+export const useFetchIncomingEmails = (id: string) =>
   useQuery(FETCH_INCOMING_EMAILS, { variables: { id }, pollInterval: 10000 });
-
-export {
-  useCreateEmptySession,
-  useGetSession,
-  useCreateSessionWithRandomAddress,
-  useListSessionsWithMails,
-  useAddAddressToSession,
-  useGetAddressWithSession,
-  useListDomains,
-  useFetchIncomingEmails,
-  useDeleteAddress,
-};

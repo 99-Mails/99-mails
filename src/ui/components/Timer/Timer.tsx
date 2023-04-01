@@ -1,28 +1,19 @@
 import { useState } from "react";
 import { Text } from "@chakra-ui/react";
-import { createTimer } from "@/lib/date";
+import { createTimer, FancyDate } from "@/lib/date";
 import useInterval from "@/hooks/useInterval";
 
 type TimerProps = {
-  expiresAt: string;
+  time: number;
   isDisabled: boolean;
 };
 
-const Timer = ({ expiresAt, isDisabled }: TimerProps) => {
-  const [time, setTime] = useState("");
+const timer = new FancyDate();
 
-  const myDate = createTimer(expiresAt);
-
-  useInterval(
-    () => {
-      setTime(myDate.getRemaindedMMSS());
-    },
-    !isDisabled ? 1000 : 0
-  );
-
+const Timer = ({ time, isDisabled }: TimerProps) => {
   return (
     <Text data-testid="timer" as="b">
-      {time}
+      {timer.getRemaindedMMSSFromSeconds(time)}
     </Text>
   );
 };

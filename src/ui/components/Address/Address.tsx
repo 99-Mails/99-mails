@@ -17,6 +17,8 @@ import type { Address, AddressID } from "@/domains/Address";
 import AddressRow from "./AddressRow";
 import ErrorBoundary, { ErrorFallback } from "../ErrorBoundary";
 import { ApolloError } from "@apollo/client";
+import { useDispatch } from "react-redux";
+import { AddressTimerActions } from "@/services/sagas/addressTimer";
 
 const AddressHeader = () => {
   return (
@@ -38,7 +40,7 @@ const AddressBody = forwardRef<AddressBodyProps, "div">((props, ref) => {
   return (
     <Box ref={ref} mt="12" {...restProps}>
       <Stack divider={<StackDivider />} spacing="2">
-        {!addresses && error && (
+        {error && (
           <Center>
             <Text>Error!</Text>
           </Center>
@@ -110,10 +112,13 @@ const AddressContainer = () => {
   const { data, loading, refetch, error } = useGetAddressWithSession(sessionID);
   const [addresses, setAddresses] = useState([]);
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
     function handleAddressNotLoading() {
       if (!loading && data) {
         setAddresses(data?.session?.addresses);
+        dispatch({ type: AddressTimerActions.actionTypes.START });
       }
     }
     handleAddressNotLoading();

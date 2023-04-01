@@ -29,6 +29,7 @@
     "react-error-boundary": "^3.1.4",
     "react-helmet": "^6.1.0",
     "react-icons": "^4.8.0",
+    "react-redux": "^8.0.5",
     "react-router-dom": "5.3.4",
     "redux-saga": "^1.2.3",
     "use-sound": "^4.0.1"
