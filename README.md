@@ -8,7 +8,7 @@
     </p>
 </div>
 
-## What is it?
+## Wait, What ??
 
 <b>Disposable email</b> - is a free email service that allows to receive email at a temporary address that self-destructed after a certain time elapses. It is also known by names like : tempmail, 10minutemail, 10minmail, throwaway email, fake-mail , fake email generator, burner mail or trash-mail. Many forums, Wi-Fi owners, websites and blogs ask visitors to register before they can view content, post comments or download something. Temp-Mail - is most advanced throwaway email service that helps you avoid spam and stay safe.
 
@@ -21,11 +21,11 @@ Forget about 📩 spams, 📯 advertising mailings, 😈 hacking and 🤖 attack
 | Feature                                                         |     |
 | --------------------------------------------------------------- | --- |
 | 15+ different email name servers                                | ✅  |
-| No need for subscription, authentication and login              | ✅  |
-| Restore access with custom dashboard                            | ✅  |
-| No email is saved on servers                                    | ✅  |
 | 10 minutes life of emails with extendable times                 | ✅  |
-| Download your emails as Zip or save to Google Drive and Dropbox | ✅  |
+| No need for subscription, authentication and login              | ✅  |
+| No email is saved on servers                                    | ✅  |
+| Restore access with custom dashboard                            | 🔨  |
+| Download your emails as Zip or save to Google Drive and Dropbox | 🔨  |
 
 ## Getting Started
 
