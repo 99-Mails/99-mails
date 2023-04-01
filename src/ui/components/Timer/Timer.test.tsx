@@ -3,9 +3,7 @@ import { vi, it, expect } from "vitest";
 import { Timer } from "./Timer";
 
 it("should render correctly", () => {
-  const { asFragment } = render(
-    <Timer expiresAt="2023-03-28T11:58:30+00:00" />
-  );
+  const { asFragment } = render(<Timer time={10} isDisabled={false} />);
   expect(asFragment()).toMatchSnapshot();
 });
 
@@ -13,7 +11,7 @@ it("should render correctly", () => {
 it("should show the correct time", async () => {
   Date.now = vi.fn(() => 1680004532101);
 
-  render(<Timer expiresAt="2023-03-28T11:58:30+00:00" />);
+  render(<Timer time={10} isDisabled={false} />);
 
   await waitFor(() => {
     expect(screen.getByTestId("timer")).toBeDefined();

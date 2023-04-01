@@ -5,6 +5,8 @@ exports[`should render correctly 1`] = `
   <b
     class="chakra-text css-0"
     data-testid="timer"
-  />
+  >
+    00:10
+  </b>
 </DocumentFragment>
 `;
