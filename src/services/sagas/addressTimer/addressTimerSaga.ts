@@ -7,18 +7,18 @@ import {
 } from "./addressTImerSelector";
 
 export function* disableTimer() {
-  yield put({ type: actionTypes.STOP });
+  yield take(actionTypes.START);
 }
 
 export function* enableTimer() {
-  yield put({ type: actionTypes.START });
+  yield take(actionTypes.START);
 }
 
 export function* runTimer() {
   // The sagasMiddleware will start running this generator.
 
   // Wake up when user starts timer.
-  while (yield take("START")) {
+  while (yield take(actionTypes.START)) {
     while (true) {
       // This side effect is not run yet, so it can be treated
       // as data, making it easier to test if needed.

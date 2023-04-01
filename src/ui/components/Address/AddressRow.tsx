@@ -12,9 +12,8 @@ import {
   Center,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { CopyIcon } from "@chakra-ui/icons";
-import { useDispatch } from "react-redux";
 import { useSelector } from "@/services/redux";
 
 const AddressRowButton = forwardRef<IconButtonProps, "button">((props, ref) => {

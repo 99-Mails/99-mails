@@ -1,7 +1,5 @@
-import { useState } from "react";
 import { Text } from "@chakra-ui/react";
-import { createTimer, FancyDate } from "@/lib/date";
-import useInterval from "@/hooks/useInterval";
+import { FancyDate } from "@/lib/date";
 
 type TimerProps = {
   time: number;
@@ -10,7 +8,7 @@ type TimerProps = {
 
 const timer = new FancyDate();
 
-const Timer = ({ time, isDisabled }: TimerProps) => {
+const Timer = ({ time }: TimerProps) => {
   return (
     <Text data-testid="timer" as="b">
       {timer.getRemaindedMMSSFromSeconds(time)}
