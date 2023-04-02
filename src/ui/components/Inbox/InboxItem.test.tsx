@@ -1,7 +1,7 @@
 import { it, expect } from "vitest";
 import { MailSummary } from "@/domains/Mail";
 import { render, screen } from "@/tests/test-utils";
-import { default as InboxItem } from "./InboxItem";
+import { InboxItem } from "./InboxItem";
 import { InboxBody } from "./Inbox";
 
 const downloadUrl: URL = new URL("http://downloadUrl.example.com/data.json");
@@ -15,7 +15,7 @@ const mail: MailSummary = {
 };
 
 it("should render correctly", () => {
-  const { asFragment, container } = render(
+  const { asFragment } = render(
     <InboxBody>
       <InboxItem mail={mail} />
     </InboxBody>

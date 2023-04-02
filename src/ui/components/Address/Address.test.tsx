@@ -5,7 +5,7 @@ import {
   waitForElementToBeRemoved,
   waitFor,
 } from "@/tests/test-utils";
-import Address from "./Address";
+import { AddressContainer as Address } from "./Address";
 import GetAddressWithSessionResponse from "@/mocks/responses/GetAddressWithSession.json";
 import type { IStoreContext } from "@/services/store/store";
 

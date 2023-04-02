@@ -1,7 +1,7 @@
 import { vi, it, expect } from "vitest";
 import { renderWithContext, screen, userEvent } from "@/tests/test-utils";
 import type { IStoreContext } from "@/services/store/store";
-import AddressRow from "./AddressRow";
+import { AddressRow } from "./AddressRow";
 import type { AddressID } from "@/domains/Address";
 
 let storeProps: IStoreContext;

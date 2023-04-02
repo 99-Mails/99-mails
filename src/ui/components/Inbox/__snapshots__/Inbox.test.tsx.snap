@@ -3,37 +3,37 @@
 exports[`should render correctly 1`] = `
 <DocumentFragment>
   <div
-    class="css-1kkt86i"
+    class="css-1811skr"
     data-testid="inbox-wrapper"
   >
     <h2
-      class="chakra-heading css-0"
+      class="chakra-heading css-479vt2"
     >
       <div
-        class="css-vffflp"
+        class="css-1tuc0ka"
       >
         <p
-          class="chakra-text css-9j8q24"
+          class="chakra-text css-1tq00ko"
         >
           Inbox
         </p>
         <span
-          class="css-x780zy"
+          class="css-12jsrtx"
           data-testid="inbox-emails-count"
         />
       </div>
     </h2>
     <div
-      class="chakra-card css-f2v14d"
+      class="chakra-card css-21s07z"
     >
       <div
-        class="chakra-card__header css-0"
+        class="chakra-card__header css-1sl53ol"
       >
         <div
           class="css-1sfjx12"
         >
           <h2
-            class="chakra-heading css-0"
+            class="chakra-heading css-18j379d"
           >
             No Emails Yet!
           </h2>
@@ -41,7 +41,7 @@ exports[`should render correctly 1`] = `
             class="css-0"
           >
             <div
-              class="chakra-spinner css-1y7joxr"
+              class="chakra-spinner css-nkpswe"
             >
               <span
                 class="css-8b45rq"
@@ -53,32 +53,36 @@ exports[`should render correctly 1`] = `
         </div>
       </div>
       <div
-        class="chakra-card__body css-1b4abyo"
+        class="chakra-card__body css-uxwmn"
       >
         <div
-          class="css-3xr8nw"
+          class="css-6fx6ch"
         >
           <div
             class="css-dvxtzn"
           >
             <p
-              class="chakra-text css-n2bes8"
+              class="chakra-text css-1x6efgi"
             >
               📨
             </p>
             <b
-              class="chakra-text css-hz05j"
+              class="chakra-text css-1syj38a"
             >
               Your inbox is empty.
             </b>
           </div>
           <div
-            class="chakra-accordion css-8atqhb"
+            class="chakra-accordion css-1ofqig9"
             data-testid="inbox-body"
           />
         </div>
       </div>
     </div>
   </div>
+  <span
+    hidden=""
+    id="__chakra_env"
+  />
 </DocumentFragment>
 `;
