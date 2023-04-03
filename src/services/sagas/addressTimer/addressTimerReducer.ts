@@ -2,7 +2,7 @@ import { actionTypes } from "./addressTimerSagaActions";
 
 const ADDRESS_TIMEOUT = 10 * 60;
 
-const InitialState = {
+export const InitialState = {
   isDisabled: false,
   seconds: ADDRESS_TIMEOUT,
 };
