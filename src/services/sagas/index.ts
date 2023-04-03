@@ -1,2 +1,2 @@
 export * from "./rootSaga";
-export * from '@/services/sagas/addressTimer';
+export * from './addressTimer';

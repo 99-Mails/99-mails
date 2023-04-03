@@ -18,9 +18,11 @@ module.exports = {
     ecmaVersion: "latest",
     sourceType: "module",
   },
+  
   plugins: ["react", "@typescript-eslint"],
   rules: {
-    "import/no-unresolved": [2, { commonjs: true, amd: true }],
+    "import/resolver": [0, { typescript: true, node: true }],
+    "import/no-unresolved": [0, { commonjs: true, amd: true }],
     "import/named": 2,
     "import/namespace": 2,
     "import/default": 2,

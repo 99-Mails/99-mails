@@ -1,4 +1,4 @@
-import { PropsWithChildren, useEffect, useState, memo } from "react";
+import { PropsWithChildren, useEffect, useState, memo, default as React } from "react";
 import {
   Box,
   Text,
@@ -18,7 +18,7 @@ import { AddressRow } from "./AddressRow";
 import ErrorBoundary, { ErrorFallback } from "../ErrorBoundary";
 import { ApolloError } from "@apollo/client";
 import { useDispatch } from "react-redux";
-import { AddressTimerActions } from "@/services/sagas/AddressTimer";
+import { AddressTimerActions } from "@/services/sagas";
 
 const AddressHeader = () => {
   return (
