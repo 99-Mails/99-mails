@@ -1,4 +1,4 @@
-import { vi, it, expect } from "vitest";
+import { vi, it, expect, beforeEach } from "vitest";
 import { renderWithContext, screen, userEvent } from "@/tests/test-utils";
 import type { IStoreContext } from "@/services/store/store";
 import { AddressRow } from "./AddressRow";

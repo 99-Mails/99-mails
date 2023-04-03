@@ -1,4 +1,4 @@
-import { it, vi } from "vitest";
+import { it, vi, expect } from "vitest";
 import { DialogProvider } from "./alertDialogContext";
 import { useAlertDialog } from "./alertDialogAdaptor";
 import { renderHook, act } from "@testing-library/react";

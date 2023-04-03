@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useCreateSessionWithRandomAddress } from "@/services/api";
 import { useTempEmail } from "@/services/tempEmailAdaptor";
 import { useDispatch } from "react-redux";
-import { AddressTimerActions } from "@/services/sagas/AddressTimer";
+import { AddressTimerActions } from "@/services/sagas";
 
 export function useGenerateSession() {
   const { setSession, cleanState, setExpiresAt } = useTempEmail();
