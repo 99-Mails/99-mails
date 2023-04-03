@@ -1,4 +1,4 @@
-import { addressTimer } from "../sagas/addressTimer";
+import { addressTimer } from "../sagas/AddressTimer";
 import { store } from "./redux";
 
 export const rootReducer = { addressTimer };

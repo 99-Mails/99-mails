@@ -56,10 +56,11 @@ exports[`should render correctly 1`] = `
         class="chakra-card__body css-uxwmn"
       >
         <div
-          class="css-6fx6ch"
+          class="css-15kytmt"
         >
           <div
-            class="css-dvxtzn"
+            class="css-186jfmq"
+            data-testid="empty-inbox"
           >
             <p
               class="chakra-text css-1x6efgi"

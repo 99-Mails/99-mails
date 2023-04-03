@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "test": "vitest --config ./vitest.config.ts",
-    "build": "tsc && vite build",
+    "build": "vite build",
+    "lint": "tsc",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
     "test:e2e:local": "CYPRESS_BASE_URL='http://localhost:5173' cypress run",
@@ -67,6 +68,7 @@
     "lint-staged": "^13.2.0",
     "msw": "^1.1.0",
     "prettier": "2.8.4",
+    "redux-saga-test-plan": "^4.0.6",
     "storybook": "^7.0.0-rc.3",
     "styled-jsx": "^5.1.2",
     "typescript": "^4.9.5",

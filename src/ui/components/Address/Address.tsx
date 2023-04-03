@@ -1,11 +1,11 @@
-import { PropsWithChildren, useEffect, useState } from "react";
+import { PropsWithChildren, useEffect, useState, memo } from "react";
 import {
+  Box,
   Text,
   Stack,
   Center,
   Spinner,
   Heading,
-  Box,
   BoxProps,
   forwardRef,
   StackDivider,
@@ -14,11 +14,11 @@ import {
 import { useTempEmail } from "@/services/store";
 import { useGetAddressWithSession } from "@/services/api";
 import type { Address, AddressID } from "@/domains/Address";
-import AddressRow from "./AddressRow";
+import { AddressRow } from "./AddressRow";
 import ErrorBoundary, { ErrorFallback } from "../ErrorBoundary";
 import { ApolloError } from "@apollo/client";
 import { useDispatch } from "react-redux";
-import { AddressTimerActions } from "@/services/sagas/addressTimer";
+import { AddressTimerActions } from "@/services/sagas/AddressTimer";
 
 const AddressHeader = () => {
   return (
@@ -34,37 +34,39 @@ type AddressBodyProps = BoxProps & {
   loading: boolean;
 };
 
-const AddressBody = forwardRef<AddressBodyProps, "div">((props, ref) => {
-  const { addresses, error, loading, ...restProps } = props;
+const AddressBody = memo(
+  forwardRef<AddressBodyProps, "div">((props, ref) => {
+    const { addresses, error, loading, ...restProps } = props;
 
-  return (
-    <Box ref={ref} mt="12" {...restProps}>
-      <Stack divider={<StackDivider />} spacing="2">
-        {error && (
-          <Center>
-            <Text>Error!</Text>
-          </Center>
-        )}
-        {loading && (
-          <Center>
-            <Spinner data-testid="loading-spinner" />
-          </Center>
-        )}
-        {addresses.length == 0 && !loading && (
-          <Center>
-            <Text data-testid="no-address" as="b">
-              No Active Address!
-            </Text>
-          </Center>
-        )}
-        {addresses &&
-          addresses.map(({ address, id }: AddressID) => (
-            <AddressRow key={id} address={address} id={id} />
-          ))}
-      </Stack>
-    </Box>
-  );
-});
+    return (
+      <Box ref={ref} mt="12" {...restProps}>
+        <Stack divider={<StackDivider />} spacing="2">
+          {error && (
+            <Center>
+              <Text>Error!</Text>
+            </Center>
+          )}
+          {loading && (
+            <Center>
+              <Spinner data-testid="loading-spinner" />
+            </Center>
+          )}
+          {addresses.length == 0 && !loading && (
+            <Center>
+              <Text data-testid="no-address" as="b">
+                No Active Address!
+              </Text>
+            </Center>
+          )}
+          {addresses &&
+            addresses.map(({ address, id }: AddressID) => (
+              <AddressRow key={id} address={address} id={id} />
+            ))}
+        </Stack>
+      </Box>
+    );
+  })
+);
 
 type AddressWrapperProps = PropsWithChildren & {
   reset: Fn;
@@ -139,4 +141,4 @@ const AddressContainer = () => {
   );
 };
 
-export default AddressContainer;
+export { AddressContainer };

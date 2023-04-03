@@ -15,6 +15,7 @@ import {
 } from "@chakra-ui/react";
 import type { MailSummary } from "@/domains/Mail";
 import { FancyDate } from "@/lib/date";
+import { memo } from "react";
 
 const InboxHeadItem = ({ text, value }: { text: string; value: string }) => {
   return (
@@ -29,12 +30,12 @@ type InboxItemProps = AccordionItemProps & {
   mail: MailSummary;
 };
 
-const InboxItem = forwardRef<InboxItemProps, "div">((props, ref) => {
+const InboxItem = memo(forwardRef<InboxItemProps, "div">((props, ref) => {
   const { mail, ...restProps } = props;
   const { headerSubject, toAddr, fromAddr, text, downloadUrl } = mail;
 
   return (
-    <AccordionItem ref={ref} {...restProps} w="full">
+    <AccordionItem ref={ref} {...restProps} w="full" >
       {({ isExpanded }) => (
         <Card
           boxShadow="none"
@@ -84,7 +85,6 @@ const InboxItem = forwardRef<InboxItemProps, "div">((props, ref) => {
       )}
     </AccordionItem>
   );
-});
+}));
 
-export { InboxHeadItem };
-export default InboxItem;
+export { InboxItem, InboxHeadItem };

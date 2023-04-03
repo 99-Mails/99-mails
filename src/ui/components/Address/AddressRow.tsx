@@ -12,7 +12,7 @@ import {
   Center,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { useEffect } from "react";
+import { memo, useEffect } from "react";
 import { CopyIcon } from "@chakra-ui/icons";
 import { useSelector } from "@/services/redux";
 
@@ -48,7 +48,7 @@ const AddressRowCount = forwardRef<AddressRowCountProps, "span">(
   }
 );
 
-const AddressRow = (address: AddressID) => {
+const AddressRow = memo((address: AddressID) => {
   const addressTimerState = useSelector((state) => state.addressTimer);
 
   const {
@@ -99,6 +99,6 @@ const AddressRow = (address: AddressID) => {
       </Center>
     </Flex>
   );
-};
+});
 
-export default AddressRow;
+export { AddressRow };

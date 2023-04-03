@@ -4,6 +4,7 @@ export const actionTypes = {
   TICK: "TICK",
   RESET: "RESET",
 };
+
 export const Start = () => ({ type: actionTypes.START });
 
 export const Stop = () => ({ type: actionTypes.STOP });

@@ -7,6 +7,8 @@ const InitialState = {
   seconds: ADDRESS_TIMEOUT,
 };
 
+export type InitialState = typeof InitialState;
+
 function addressTimer(state = InitialState, action = null) {
   switch (action.type) {
     case actionTypes.STOP:

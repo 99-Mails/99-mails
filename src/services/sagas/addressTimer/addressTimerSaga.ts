@@ -1,4 +1,4 @@
-import { call, put, select, take } from "redux-saga/effects";
+import { actionChannel, call, put, select, take } from "redux-saga/effects";
 import { ONE_SECOND, wait } from "../utils";
 import { actionTypes, Stop, Tick } from "./addressTimerSagaActions";
 import {
@@ -6,19 +6,11 @@ import {
   getAddressTimerSeconds,
 } from "./addressTImerSelector";
 
-export function* disableTimer() {
-  yield take(actionTypes.START);
-}
-
-export function* enableTimer() {
-  yield take(actionTypes.START);
-}
-
 export function* runTimer() {
   // The sagasMiddleware will start running this generator.
-
+  const channel = yield actionChannel(actionTypes.START)
   // Wake up when user starts timer.
-  while (yield take(actionTypes.START)) {
+  while (yield take(channel)) {
     while (true) {
       // This side effect is not run yet, so it can be treated
       // as data, making it easier to test if needed.
@@ -38,8 +30,4 @@ export function* runTimer() {
       }
     }
   }
-}
-
-export function* resetTimer() {
-  yield put({ type: actionTypes.RESET });
 }

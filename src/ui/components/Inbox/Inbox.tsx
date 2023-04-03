@@ -19,8 +19,9 @@ import { useFetchIncomingEmails } from "@/services/api";
 import { useTempEmail } from "@/services/tempEmailAdaptor";
 import type { Mail } from "@/domains/Mail";
 import ErrorBoundary, { ErrorFallback } from "../ErrorBoundary";
-import { default as InboxItem } from "./InboxItem";
-import { PropsWithChildren } from "react";
+import { InboxItem } from "./InboxItem";
+import { PropsWithChildren, useEffect } from "react";
+import { useSoundEffects } from "@/hooks/useSoundEffects";
 
 type InboxBodyProps = AccordionProps & PropsWithChildren;
 
@@ -59,6 +60,12 @@ const InboxContainer = () => {
   const InboxBodyBg = useColorModeValue("gray.100", "blue.100");
   const InboxEmptyTextColor = useColorModeValue("gray.500", "blue.900");
 
+  // const { playRelaxingEffect } = useSoundEffects();
+
+  // useEffect(() => {
+  //   playRelaxingEffect()
+  // }, [data])
+
   return (
     <InboxWrapper data-testid="inbox-wrapper" reset={() => refetch()}>
       <Heading size="xs">
@@ -83,9 +90,22 @@ const InboxContainer = () => {
           </Flex>
         </CardHeader>
         <CardBody bg={InboxBodyBg} p="0">
-          <Center flex="1" flexDirection="column" gap="3" minH="80">
+          <Center
+            flex="1"
+            flexDirection="column"
+            gap="3"
+            minH="80"
+            justifyContent="start"
+          >
             {!data?.session.mails.length && (
-              <Flex flexDirection="column" alignItems="center">
+              <Flex
+                flexGrow="1"
+                flexDirection="column"
+                alignItems="center"
+                justifyContent="center"
+                minH="fit-content"
+                data-testid="empty-inbox"
+              >
                 <Text fontSize="6xl">📨</Text>
                 <Text as="b" fontSize="xl" color={InboxEmptyTextColor}>
                   Your inbox is empty.
