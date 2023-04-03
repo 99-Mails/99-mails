@@ -7,7 +7,7 @@ WORKDIR /app
 COPY package.json .
 COPY yarn.lock .
 
-RUN yarn install --production --pure-lockfile && \
+RUN yarn install --frozen-lockfile && \
     yarn build && \
     yarn cache clean && \
     rm -rf ./src ./cypress ./public
