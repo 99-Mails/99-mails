@@ -1,7 +1,7 @@
 import { all } from "redux-saga/effects";
 import {
   runTimer,
-} from "./AddressTimer";
+} from "./addressTimer";
 
 function* rootSaga() {
   yield all([runTimer()]);
