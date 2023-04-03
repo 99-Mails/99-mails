@@ -1,0 +1,10 @@
+version: '3'
+services:
+  client:
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: 99mails:latest
+    ports:
+      - 5173:5173
