@@ -27,6 +27,5 @@ module.exports = {
     "import/export": 2,
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
-    indent: "error",
   },
 };
