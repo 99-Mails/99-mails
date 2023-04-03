@@ -3,17 +3,13 @@ FROM node:18-alpine
 # Add a work directory
 WORKDIR /app
 
-# Cache and Install dependencies
-COPY package.json .
-COPY yarn.lock .
+# Copy app files
+COPY . /app
 
 RUN yarn install --frozen-lockfile && \
     yarn build && \
     yarn cache clean && \
     rm -rf ./src ./cypress ./public
-
-# Copy app files
-COPY . /app
 
 # Expose port
 EXPOSE 5173
