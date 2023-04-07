@@ -1,7 +1,7 @@
 <div align="center">
   <a href="https://github.com/mahdikhashan/99-minutes-emails">
     <img src="./assets/logo.png" alt="99Mails Logo" /></a>
-  <h1>99 Mails.</h1>
+  </hr>
     <p>
       <b>A User friendly, 🔒 Safe and ⏰ available temporary ✉️ email service.
       </b>
