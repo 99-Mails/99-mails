@@ -1,0 +1,16 @@
+{
+  "session": {
+    "__typename": "Session",
+    "mails": [
+      {
+        "__typename": "Mail",
+        "rawSize": 2485,
+        "fromAddr": "mahdikhashan1@gmail.com",
+        "toAddr": "xttfwqsuc@laste.ml",
+        "downloadUrl": "https://dropmail.me/download/mail/gql:anonym-mylongtoken:8901c1c0-db20-4788-9e60-f7e1af332947/20230323txdpvxv0a7rjcbtwv1hvzh5z2xx7azvh",
+        "text": "You new temp email address",
+        "headerSubject": "Hey, happy Norowz!"
+      }
+    ]
+  }
+}

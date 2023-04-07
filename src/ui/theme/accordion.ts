@@ -8,13 +8,10 @@ const baseStyle = definePartsStyle({
   root: {
     display: "flex",
     flexDirection: "column",
-    gap: "10px"
   },
   container: {
     border: 0,
-  },
-  button: {
-    borderRadius: "6px",
+    borderRadius: 0,
   },
 });
 

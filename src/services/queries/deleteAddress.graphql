@@ -1,0 +1,3 @@
+mutation DeleteAddress($input: DeleteAddressInput!) {
+  deleteAddress(input: $input)
+}

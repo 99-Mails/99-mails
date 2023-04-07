@@ -1,8 +1,9 @@
-import { Domain } from "../domains/Domain";
+import { Domain } from "@/domains/Domain";
+import { AccessInterface } from "@/domains/Shared";
 
 export const INITIAL_DOMAIN: Domain = {
-  id: undefined,
+  id: "12345678",
   name: "Additional Address",
-  availableVia: "unknown",
-  introducedAt: "unknown"
-}
+  availableVia: AccessInterface.WEB,
+  introducedAt: "unknown",
+};

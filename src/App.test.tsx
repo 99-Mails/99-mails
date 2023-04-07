@@ -1,21 +1,45 @@
-import { it, expect } from "vitest";
+import { vi, it, expect } from "vitest";
 import {
-  renderWithContext,
   screen,
   userEvent,
+  renderWithContext,
   waitForElementToBeRemoved,
-} from "./tests/test-utils";
+} from "@/tests/test-utils";
 import App from "./App";
+import type { IStoreContext } from "@/services/store/store";
 
-it.skip("should get a random address when renders", async () => {
-  renderWithContext(<App />, { storeProps: {} });
+let storeProps: IStoreContext;
+
+beforeEach(() => {
+  storeProps = {
+    dispatch: vi.fn,
+    state: {
+      tempEmails: {
+        sessionId: "123123",
+        expiresAt: 0,
+      },
+    },
+  };
+});
+
+// TODO: fix this test
+it.skip("should get a random address when clicks on reset session button", async () => {
+  const user = userEvent.setup();
+
+  renderWithContext(<App />, { storeProps });
 
   expect(screen.getByTestId("header")).toBeDefined();
 
-  // userEvent.click(screen.getByRole("button", { name: "Fetch Posts" }));
+  await waitForElementToBeRemoved(() => screen.queryAllByText("Loading..."));
 
-  // await waitForElementToBeRemoved(() => screen.queryByLabelText("loading"));
+  const resetSession = screen.getByTestId("reset-session-btn");
+  expect(resetSession).toBeDefined();
 
+  await user.click(resetSession);
+
+  // expect(screen.findByTestId("address-list"))
+
+  // await waitForElementToBeRemoved
   // posts.forEach((post) => {
   //   expect(
   //     screen.getByRole("heading", { name: post.title, level: 2 })

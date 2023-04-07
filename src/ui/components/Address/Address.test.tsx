@@ -1,19 +1,25 @@
 import { vi, it, expect } from "vitest";
-import { 
-  screen, 
-  renderWithContext, 
-  waitForElementToBeRemoved 
-} from "../../../tests/test-utils";
-import Address from "./Address";
-import GetAddressWithSessionResponse from '../../../mocks/responses/GetAddressWithSession.json'
+import {
+  screen,
+  renderWithContext,
+  waitForElementToBeRemoved,
+  waitFor,
+} from "@/tests/test-utils";
+import { AddressContainer as Address } from "./Address";
+import GetAddressWithSessionResponse from "@/mocks/responses/GetAddressWithSession.json";
+import type { IStoreContext } from "@/services/store/store";
 
-let storeProps;
+let storeProps: IStoreContext;
 
 beforeEach(() => {
   storeProps = {
-    sessionId: "12345678",
-    cleanState: vi.fn(),
-    setSession: vi.fn(),
+    dispatch: vi.fn,
+    state: {
+      tempEmails: {
+        sessionId: "123123",
+        expiresAt: 0,
+      },
+    },
   };
 });
 
@@ -32,9 +38,21 @@ it("should display the emails", async () => {
 
   const addresses = GetAddressWithSessionResponse.session.addresses;
 
-  await waitForElementToBeRemoved(screen.queryByText('Loading...'))
+  await waitForElementToBeRemoved(screen.queryByText("Loading..."));
 
-  addresses.forEach(address => {
-    expect(screen.getByText(address.address)).toBeDefined()
-  })
+  await waitFor(() => {
+    addresses.forEach((address) => {
+      expect(screen.getByText(address.address)).toBeDefined();
+    });
+  });
+});
+
+it("should display a message when there is no address", async () => {
+  storeProps.state.tempEmails.sessionId = "123456";
+
+  renderWithContext(<Address />, { storeProps });
+
+  await waitFor(() => {
+    expect(screen.getByText("No Active Address!")).toBeInTheDocument();
+  });
 });

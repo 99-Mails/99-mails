@@ -1,0 +1,89 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`should render correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="css-1811skr"
+    data-testid="inbox-wrapper"
+  >
+    <h2
+      class="chakra-heading css-479vt2"
+    >
+      <div
+        class="css-1tuc0ka"
+      >
+        <p
+          class="chakra-text css-1tq00ko"
+        >
+          Inbox
+        </p>
+        <span
+          class="css-12jsrtx"
+          data-testid="inbox-emails-count"
+        />
+      </div>
+    </h2>
+    <div
+      class="chakra-card css-21s07z"
+    >
+      <div
+        class="chakra-card__header css-1sl53ol"
+      >
+        <div
+          class="css-1sfjx12"
+        >
+          <h2
+            class="chakra-heading css-18j379d"
+          >
+            No Emails Yet!
+          </h2>
+          <div
+            class="css-0"
+          >
+            <div
+              class="chakra-spinner css-nkpswe"
+            >
+              <span
+                class="css-8b45rq"
+              >
+                Loading...
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="chakra-card__body css-uxwmn"
+      >
+        <div
+          class="css-15kytmt"
+        >
+          <div
+            class="css-186jfmq"
+            data-testid="empty-inbox"
+          >
+            <p
+              class="chakra-text css-1x6efgi"
+            >
+              📨
+            </p>
+            <b
+              class="chakra-text css-1syj38a"
+            >
+              Your inbox is empty.
+            </b>
+          </div>
+          <div
+            class="chakra-accordion css-1ofqig9"
+            data-testid="inbox-body"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <span
+    hidden=""
+    id="__chakra_env"
+  />
+</DocumentFragment>
+`;

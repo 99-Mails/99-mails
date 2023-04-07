@@ -1,9 +1,18 @@
+import { PropsWithChildren } from "react";
 import { Container } from "@chakra-ui/react";
+import { Navbar } from "../components/Navbar";
+import { Footer } from "../components/Footer";
 
-const MainLayout = (props) => {
+const MainLayout = (props: PropsWithChildren) => {
   const { children } = props;
 
-  return <Container maxW={"container.xl"}>{children}</Container>;
+  return (
+    <>
+      <Navbar />
+      <Container maxW={"container.xl"}>{children}</Container>
+      <Footer />
+    </>
+  );
 };
 
 export default MainLayout;

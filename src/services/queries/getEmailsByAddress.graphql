@@ -1,0 +1,12 @@
+query GetEmailsByAddress($id: ID!) {
+  session(id: $id) {
+    mails {
+      rawSize
+      fromAddr
+      toAddr
+      downloadUrl
+      text
+      headerSubject
+    }
+  }
+}
