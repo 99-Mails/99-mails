@@ -1,7 +1,7 @@
 import { vi, it, expect } from "vitest";
 import { FancyDate } from "./date";
 
-it("should get the client timezone as a string", () => {
+it("should get the apolloClient timezone as a string", () => {
   const DateTimeFormat = Intl.DateTimeFormat;
   vi.spyOn(global.Intl, "DateTimeFormat").mockImplementation(
     (locale, options) =>

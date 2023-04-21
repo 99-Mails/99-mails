@@ -1,9 +1,10 @@
 import { it } from "vitest";
 import { StoreProvider, useTempEmail } from "./store";
 import { renderHook, act } from "@testing-library/react";
+import { PropsWithChildren } from "react";
 
 it("should set the app state correctly", () => {
-  const wrapper = ({ children }) => {
+  const wrapper = ({ children }: PropsWithChildren) => {
     return <StoreProvider>{children}</StoreProvider>;
   };
 

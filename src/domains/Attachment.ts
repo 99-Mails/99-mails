@@ -27,5 +27,5 @@ export type Attachment = {
   /**
    * Size of the raw payload
    */
-  rawSize: BigInt;
+  rawSize: bigint;
 };

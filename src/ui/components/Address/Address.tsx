@@ -1,4 +1,10 @@
-import { PropsWithChildren, useEffect, useState, memo, default as React } from "react";
+import {
+  PropsWithChildren,
+  useEffect,
+  useState,
+  memo,
+  default as React,
+} from "react";
 import {
   Box,
   Text,
@@ -19,6 +25,7 @@ import ErrorBoundary, { ErrorFallback } from "../ErrorBoundary";
 import { ApolloError } from "@apollo/client";
 import { useDispatch } from "react-redux";
 import { AddressTimerActions } from "@/services/sagas";
+import { Fn } from "@/types";
 
 const AddressHeader = () => {
   return (
@@ -41,16 +48,16 @@ const AddressBody = memo(
     return (
       <Box ref={ref} mt="12" {...restProps}>
         <Stack divider={<StackDivider />} spacing="2">
-          {error && (
+          {error ? (
             <Center>
               <Text>Error!</Text>
             </Center>
-          )}
-          {loading && (
+          ) : null}
+          {loading ? (
             <Center>
               <Spinner data-testid="loading-spinner" />
             </Center>
-          )}
+          ) : null}
           {addresses.length == 0 && !loading && (
             <Center>
               <Text data-testid="no-address" as="b">
@@ -58,10 +65,9 @@ const AddressBody = memo(
               </Text>
             </Center>
           )}
-          {addresses &&
-            addresses.map(({ address, id }: AddressID) => (
-              <AddressRow key={id} address={address} id={id} />
-            ))}
+          {addresses.map(({ address, id }: AddressID) => (
+            <AddressRow key={id} address={address} id={id} />
+          ))}
         </Stack>
       </Box>
     );
@@ -85,7 +91,10 @@ const AddressWrapper = (props: AddressWrapperProps) => {
       sx={{
         height: "200px",
         width: "600px",
-        backgroundImage: `linear-gradient(90deg, blue.500 50%, transparent 50%), linear-gradient(90deg, blue.500 50%, transparent 50%), linear-gradient(0deg, blue.500 50%, transparent 50%), linear-gradient(0deg, blue.500 50%, transparent 50%)`,
+        backgroundImage: `linear-gradient(90deg, blue.500 50%, transparent 50%), \
+          linear-gradient(90deg, blue.500 50%, transparent 50%), \
+          linear-gradient(0deg, blue.500 50%, transparent 50%), \
+          linear-gradient(0deg, blue.500 50%, transparent 50%)`,
         backgroundRepeat: "repeat-x, repeat-x, repeat-y, repeat-y",
         backgroundSize: "15px 3px, 15px 3px, 3px 15px, 3px 15px",
         backgroundPosition: "left top, right bottom, left bottom, right top",
@@ -116,13 +125,14 @@ const AddressContainer = () => {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    function handleAddressNotLoading() {
-      if (!loading && data) {
-        setAddresses(data?.session?.addresses);
-        dispatch({ type: AddressTimerActions.actionTypes.START });
-      }
+  function handleAddressNotLoading() {
+    if (!loading && data) {
+      setAddresses(data?.session?.addresses);
+      dispatch({ type: AddressTimerActions.actionTypes.START });
     }
+  }
+
+  useEffect(() => {
     handleAddressNotLoading();
 
     return () => setAddresses([]);

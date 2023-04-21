@@ -1,4 +1,4 @@
-import type { Domain } from "@/domains/Domain";
+import type { Domain } from "@/domains/domain";
 import { useAddAddressToSession as API } from "@/services/api";
 import { useTempEmail } from "@/services/tempEmailAdaptor";
 

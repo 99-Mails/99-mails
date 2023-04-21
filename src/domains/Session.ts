@@ -1,6 +1,6 @@
-import type { ID, Timestamp } from "./Shared";
-import type { Address } from "./Address";
-import type { Mail } from "./Mail";
+import type { ID, Timestamp } from "@/types";
+import type { Address } from "./address";
+import type { Mail } from "./mail";
 
 export type Session = {
   /**

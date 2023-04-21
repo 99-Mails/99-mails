@@ -37,7 +37,7 @@ function useDeleteAddressFromSession() {
       dialog.isLoading();
 
       try {
-        let response = await deleteAddress({
+        const response = await deleteAddress({
           variables: { input: { addressId: address.id } },
         });
 
@@ -53,7 +53,7 @@ function useDeleteAddressFromSession() {
             "Couldn't remove the address, try later!"
           );
         }
-      } catch (e: any) {
+      } catch (e: unknown) {
         throw new Error(e, {});
       }
     } else {

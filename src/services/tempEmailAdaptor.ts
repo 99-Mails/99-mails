@@ -8,7 +8,7 @@ function useTempEmail() {
   const sessionID = store.state.tempEmails.sessionId;
 
   const setSession = (id: string) =>
-    store.dispatch({ type: TempEmail.SetSession, payload: { id } });
+    store.dispatch({ type: TempEmail.setSession, payload: { id } });
 
   const cleanState = () => store.dispatch({ type: TempEmail.clean });
 
@@ -16,7 +16,7 @@ function useTempEmail() {
 
   const setExpiresAt = (expiresAt: number) =>
     store.dispatch({
-      type: TempEmail.SetSessionExpiration,
+      type: TempEmail.setSessionExpiration,
       payload: { expiresAt },
     });
 

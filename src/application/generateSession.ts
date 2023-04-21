@@ -4,6 +4,7 @@ import { useTempEmail } from "@/services/tempEmailAdaptor";
 import { useDispatch } from "react-redux";
 import { AddressTimerActions } from "@/services/sagas";
 
+// TODO: should keep the session when user wants to login
 export function useGenerateSession() {
   const { setSession, cleanState, setExpiresAt } = useTempEmail();
   const [
@@ -13,18 +14,20 @@ export function useGenerateSession() {
 
   const dispatch = useDispatch();
 
+  const func = () => {
+    if (SessionWithRandomAddress) {
+      setSession(SessionWithRandomAddress?.introduceSession?.id);
+      setExpiresAt(
+        new Date(
+          SessionWithRandomAddress?.introduceSession?.expiresAt
+        ).getTime()
+      );
+    }
+  };
+
   useEffect(() => {
-    const func = () => {
-      if (SessionWithRandomAddress) {
-        setSession(SessionWithRandomAddress?.introduceSession?.id);
-        setExpiresAt(
-          new Date(
-            SessionWithRandomAddress?.introduceSession?.expiresAt
-          ).getTime()
-        );
-      }
-    };
     func();
+  
     return () => setSession("");
   }, [loadingSession]);
 

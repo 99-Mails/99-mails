@@ -1,19 +1,26 @@
-import { createContext, useReducer, useEffect, Dispatch } from "react";
+import { createContext, useReducer, useEffect, Dispatch, useMemo } from "react";
 import {
   TempEmailReducer,
   TempEmailActions,
-  TempEmailInitialState,
   tempEmailInitialState,
-} from "./reducers/tempEmailReducer";
+} from "./reducers/temp-email";
+import {
+  AuthActions,
+  AuthInitialState,
+  authInitialState,
+  AuthReducer,
+} from "./reducers/auth";
+import type { TempEmailInitialState } from "./reducers";
+import { combineReducers } from "./combine-reducers";
 
 const storagePrefix = "disposable_mail_";
 const storageKey = storagePrefix + "root";
 
 type IStoreProviderProps = {
-  children: React.ReactNode[] | React.ReactNode;
+  children: React.ReactNode;
 };
 
-type ActionTypes = TempEmailActions;
+type ActionTypes = AuthActions | TempEmailActions;
 
 export interface IStoreContext {
   state: InitialStateType;
@@ -22,10 +29,12 @@ export interface IStoreContext {
 
 type InitialStateType = {
   tempEmails: TempEmailInitialState;
+  auth: AuthInitialState;
 };
 
 const initialState = {
   tempEmails: tempEmailInitialState,
+  auth: authInitialState,
 };
 
 export const StoreContext = createContext<IStoreContext>({
@@ -33,20 +42,19 @@ export const StoreContext = createContext<IStoreContext>({
   dispatch: () => null,
 });
 
-const rootReducer = (
-  { tempEmails }: InitialStateType,
-  action: ActionTypes
-) => ({
-  tempEmails: TempEmailReducer(tempEmails, action),
-});
-
+// TODO: should memoize the store
 const StoreProvider = ({ children }: IStoreProviderProps) => {
   const [state, dispatch] = useReducer(
-    rootReducer,
+    combineReducers({
+      tempEmails: TempEmailReducer,
+      auth: AuthReducer,
+    }),
     initialState,
     // @ts-ignore
     (initial) => JSON.parse(localStorage.getItem(storageKey)) || initial
   );
+
+  // const store = useMemo(() => { state, dispatch }, [state]);
 
   useEffect(() => {
     localStorage.setItem(storageKey, JSON.stringify(state));

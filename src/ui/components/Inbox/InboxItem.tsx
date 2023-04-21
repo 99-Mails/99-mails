@@ -13,7 +13,7 @@ import {
   AccordionItemProps,
   forwardRef,
 } from "@chakra-ui/react";
-import type { MailSummary } from "@/domains/Mail";
+import type { MailSummary } from "@/domains/mail";
 import { FancyDate } from "@/lib/date";
 import { memo } from "react";
 

@@ -1,6 +1,6 @@
-import type { Domain } from "./Domain";
-import type { Mail } from "./Mail";
-import type { ID } from "./Shared";
+import type { Domain } from "./domain";
+import type { Mail } from "./mail";
+import type { ID } from "@/types";
 
 export type Address = {
   id: ID;

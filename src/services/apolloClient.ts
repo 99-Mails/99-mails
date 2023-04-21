@@ -8,7 +8,7 @@ const link = new HttpLink({
   fetch: (...args) => fetch(...args),
 });
 
-export const client = new ApolloClient({
+export const apolloClient = new ApolloClient({
   link,
   cache: new InMemoryCache(),
   connectToDevTools: true,

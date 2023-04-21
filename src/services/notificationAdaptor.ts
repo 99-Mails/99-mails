@@ -1,7 +1,7 @@
 import { NotificationService } from "../application/ports";
 import { useToast } from "@chakra-ui/react";
 
-// TODO: codesmells
+// TODO: codesmell
 export function useNotifier(): NotificationService {
   const toast = useToast();
 

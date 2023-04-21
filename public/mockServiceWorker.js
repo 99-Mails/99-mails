@@ -167,8 +167,8 @@ async function handleRequest(event, requestId) {
   return response;
 }
 
-// Resolve the main client for the given event.
-// Client that issues a request doesn't necessarily equal the client
+// Resolve the main apolloClient for the given event.
+// Client that issues a request doesn't necessarily equal the apolloClient
 // that registered the worker. It's with the latter the worker should
 // communicate with during the response resolving phase.
 async function resolveMainClient(event) {
@@ -188,7 +188,7 @@ async function resolveMainClient(event) {
       return client.visibilityState === "visible";
     })
     .find((client) => {
-      // Find the client ID that's recorded in the
+      // Find the apolloClient ID that's recorded in the
       // set of clients that have registered the worker.
       return activeClientIds.has(client.id);
     });
@@ -200,7 +200,7 @@ async function getResponse(event, client, requestId) {
 
   function passthrough() {
     // Clone the request because it might've been already used
-    // (i.e. its body has been read and sent to the client).
+    // (i.e. its body has been read and sent to the apolloClient).
     const headers = Object.fromEntries(clonedRequest.headers.entries());
 
     // Remove MSW-specific request headers so the bypassed requests
@@ -212,13 +212,13 @@ async function getResponse(event, client, requestId) {
     return fetch(clonedRequest, { headers });
   }
 
-  // Bypass mocking when the client is not active.
+  // Bypass mocking when the apolloClient is not active.
   if (!client) {
     return passthrough();
   }
 
   // Bypass initial page load requests (i.e. static assets).
-  // The absence of the immediate/parent client in the map of the active clients
+  // The absence of the immediate/parent apolloClient in the map of the active clients
   // means that MSW hasn't dispatched the "MOCK_ACTIVATE" event yet
   // and is not ready to handle requests.
   if (!activeClientIds.has(client.id)) {
@@ -231,7 +231,7 @@ async function getResponse(event, client, requestId) {
     return passthrough();
   }
 
-  // Notify the client that a request has been intercepted.
+  // Notify the apolloClient that a request has been intercepted.
   const clientMessage = await sendToClient(client, {
     type: "REQUEST",
     payload: {

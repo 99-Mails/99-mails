@@ -1,7 +1,7 @@
-import { Domain } from "./Domain";
 import { it, expect } from "vitest";
-import { filterByName } from "./Domain";
-import { AccessInterface } from "./Shared";
+import { filterByName } from "./domain";
+import type { Domain } from "./domain";
+import { AccessInterface } from "@/types";
 
 it("should filter Domain list by name", () => {
   const domains: Domain[] = [

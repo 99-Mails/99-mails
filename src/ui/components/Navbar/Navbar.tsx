@@ -1,4 +1,4 @@
-import { LockIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
+import { LockIcon, MoonIcon, SunIcon, ExternalLinkIcon } from "@chakra-ui/icons";
 import {
   Flex,
   HStack,
@@ -12,37 +12,23 @@ import {
 import { Suspense } from "react";
 import { Logo } from "../Logo";
 import { Timer } from "../Timer";
-import { FaBell, FaBellSlash } from "react-icons/fa";
-import { useSoundEffects } from "@/hooks/useSoundEffects";
 import { useSelector } from "react-redux";
 import { useGenerateSession } from "@/application/generateSession";
+import { useHistory } from "react-router-dom";
+import { useLogin } from "@/application/authenticate/login";
 
 const Navbar = () => {
-  // @ts-ignore
   const addressTimerState = useSelector((state) => state.addressTimer);
-
-  const { isSoundEffect, toggleSoundEffect } = useSoundEffects();
   const { colorMode, toggleColorMode } = useColorMode();
-
   const { generateSession, loadingSession } = useGenerateSession();
+
+  const router = useHistory();
+  const login = useLogin();
 
   return (
     <Flex p="6" justifyContent="space-between" alignItems="center">
       <Logo />
       <HStack gap="1">
-        <IconButton
-          size="sm"
-          icon={
-            isSoundEffect ? (
-              <FaBell size="25px" color="gray" />
-            ) : (
-              <FaBellSlash size="30px" color="gray" />
-            )
-          }
-          aria-label="github-link"
-          bg="transparent"
-          onClick={toggleSoundEffect}
-        />
         <IconButton
           size="sm"
           icon={
@@ -86,11 +72,12 @@ const Navbar = () => {
         </Button>
         <Button
           size="sm"
-          leftIcon={<LockIcon />}
+          leftIcon={login.alreadyLogined ? <ExternalLinkIcon /> : <LockIcon />}
           colorScheme="blue"
           variant="solid"
+          onClick={() => router.push("/login")}
         >
-          Login
+          {login.alreadyLogined ? "Dashboard" : "Login"}
         </Button>
       </HStack>
     </Flex>

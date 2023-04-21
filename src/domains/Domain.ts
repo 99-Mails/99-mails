@@ -1,4 +1,4 @@
-import type { Timestamp, AccessInterface, ID } from "./Shared";
+import type { Timestamp, AccessInterface, ID } from "@/types";
 
 export type Domain = {
   /**

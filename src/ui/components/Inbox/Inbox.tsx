@@ -17,7 +17,7 @@ import {
 } from "@chakra-ui/react";
 import { useFetchIncomingEmails } from "@/services/api";
 import { useTempEmail } from "@/services/tempEmailAdaptor";
-import type { Mail } from "@/domains/Mail";
+import type { Mail } from "@/domains/mail";
 import ErrorBoundary, { ErrorFallback } from "../ErrorBoundary";
 import { InboxItem } from "./InboxItem";
 import { PropsWithChildren, useEffect } from "react";

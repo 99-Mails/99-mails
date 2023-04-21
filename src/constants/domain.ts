@@ -1,5 +1,5 @@
-import { Domain } from "@/domains/Domain";
-import { AccessInterface } from "@/domains/Shared";
+import { Domain } from "@/domains/domain";
+import { AccessInterface } from "@/types";
 
 export const INITIAL_DOMAIN: Domain = {
   id: "12345678",

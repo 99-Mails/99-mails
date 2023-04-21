@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { useGenerateSession } from "@/application/generateSession";
 import ErrorBoundary, { ErrorFallback } from "@/ui/components/ErrorBoundary";
-import { Helmet } from "react-helmet";
+import { PageHead } from "../components/PageHead";
 
 const HomePage = () => {
   const { generateSession } = useGenerateSession();
@@ -25,12 +25,7 @@ const HomePage = () => {
 
   return (
     <>
-      <Helmet>
-        <meta charSet="utf-8" />
-        <title>99 Mails | Safe Disposable Email Service</title>
-        <link rel="canonical" href="http://mysite.com/example" />
-        <link rel="icon" type="image/png" href="logo.png" sizes="16x16" />
-      </Helmet>
+      <PageHead title="99 Mails | Safe Disposable Email Service" />
 
       <ErrorBoundary FallbackComponent={ErrorFallback}>
         <Flex flexDirection="column" gap="8" mb="2">

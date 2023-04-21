@@ -1,5 +1,5 @@
-import type { Attachment } from "./Attachment";
-import type { Timestamp, DecodeStatus, TextSource } from "./Shared";
+import type { DecodeStatus, TextSource, Timestamp } from "@/types";
+import type { Attachment } from "./attachment";
 
 export type Mail = {
   /**

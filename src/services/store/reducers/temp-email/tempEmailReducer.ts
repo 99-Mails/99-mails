@@ -9,20 +9,22 @@
  * @version: 0.0.1 Alpha
  */
 
+import { ActionMap } from "@/types";
+
 export enum TempEmail {
   clean = "CLEAN_STATE",
-  SetSession = "SET_SESSION_ID",
-  SetSessionExpiration = "SET_SESSION_EXPIRATION",
+  setSession = "SET_SESSION_ID",
+  setSessionExpiration = "SET_SESSION_EXPIRATION",
 }
 
 export type TempEmailInitialState = typeof tempEmailInitialState;
 
 export type TempEmailPayloads = {
   [TempEmail.clean]: undefined;
-  [TempEmail.SetSession]: {
+  [TempEmail.setSession]: {
     id: string;
   };
-  [TempEmail.SetSessionExpiration]: {
+  [TempEmail.setSessionExpiration]: {
     expiresAt: number;
   };
 };
@@ -42,18 +44,18 @@ const TempEmailReducer = (
   switch (action.type) {
     case TempEmail.clean:
       return tempEmailInitialState;
-    case TempEmail.SetSession:
+    case TempEmail.setSession:
       return {
         ...state,
         sessionId: action.payload.id,
       };
-    case TempEmail.SetSessionExpiration:
+    case TempEmail.setSessionExpiration:
       return {
         ...state,
         expiresAt: action.payload.expiresAt,
       };
     default:
-      throw new Error("unhandled action type");
+      return state
   }
 };
 
